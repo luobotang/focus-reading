@@ -1,0 +1,29 @@
+{
+	"name": "Focus Reading",
+	"version": "0.1",
+	"description": "Focus on Reading",
+	"browser_action": {
+		"default_icon": "icon.png"
+	},
+	"permissions": [
+		"tabs",
+		"http://www.gamersky.com/*"
+	],
+	"icons": {
+		"128": "icon.png"
+	},
+	"manifest_version": 2,
+	"content_scripts": [{
+		"matches": [
+			"http://www.gamersky.com/*"
+		],
+		"css": [
+			"read.css"
+		],
+		"js": [
+			"jquery.min.js",
+			"read.js"
+		],
+		"run_at": "document_end"
+	}]
+}
