@@ -58,10 +58,7 @@ body.focus-reading {
 	color: #888;
 }
 
-#focus-reading-pad-content section {
-	padding: 1em 0;
-	border-bottom: 1px dotted #ccc;
-}
+
 
 #focus-reading-pad-content p + p {
 	margin-top: 10px;
@@ -71,4 +68,10 @@ body.focus-reading {
 	margin-top: 10px;
 	margin-bottom: 10px;
 	max-width: 100%;
+}
+
+/* for tieba.baidu */
+#focus-reading-pad-content section {
+	padding: 1em 0;
+	border-bottom: 1px dotted #ccc;
 }

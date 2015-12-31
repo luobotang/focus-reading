@@ -14,7 +14,11 @@
 			"http://baike.baidu.com/*",
 			"http://tieba.baidu.com/p/*",
 			"http://www.guancha.cn/*",
-			"http://www.tuicool.com/*"
+			"http://www.tuicool.com/*",
+			"http://www.chinanews.com/*",
+			"http://news.xinhuanet.com/*",
+			"http://www.21ccom.net/*",
+			"http://www.chinavalue.net/*"
 		],
 		"css": [
 			"read.css"

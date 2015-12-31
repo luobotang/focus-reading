@@ -36,10 +36,8 @@
 
 	function showPad(title, content) {
 		$readingPad.find('#focus-reading-pad-content').html(
-			'<section>' +
-				'<h1>' + title + '</h1>' +
-				content +
-			'</section>'
+			'<h1>' + title + '</h1>' +
+			content
 		)
 		$readingPad.show()
 		$('html,body').addClass(CLASS_READING_PAD_SHOWING)
@@ -68,17 +66,28 @@
 	}
 
 	/**
+	 * 1. generator object
 	 * @param {Object} siteGenerator
-	 * - name {sring}
-	 * - match {function}
-	 * - title {function}
-	 * - content {function}
+	 *   - name {sring}
+	 *   - title {string|function}
+	 *   - content {string|function}
+	 *
+	 * 2. generator params
+	 * @param {string} - name
+	 * @param {string|function} - title selector | generator
+	 * @param {string|function} - content selector | generator
 	 */
-	ContentGenerator.add = function (siteGenerator) {
-		if (siteGenerator && siteGenerator.match) {
-			this.generators.push(siteGenerator);
+	ContentGenerator.add = function (generator) {
+		if (typeof siteGenerator === 'object') {
+			this.generators.push(generator)
+		} else if (arguments.length === 3) {
+			this.generators.push({
+				name: arguments[0],
+				title: arguments[1],
+				content: arguments[2]
+			})
 		}
-		return this;
+		return this
 	}
 
 	ContentGenerator.generatArticle = function () {
@@ -86,10 +95,14 @@
 		var hostname = location.hostname
 		var i = 0
 		while ((generator = this.generators[i++])) {
-			if (generator.match(hostname)) {
-				return {
-					title: generator.title(),
-					content: generator.content()
+			if (hostname.indexOf(generator.name) > -1) {
+				var title = getText(generator.title)
+				var content = getHtml(generator.content)
+				if (title && content) {
+					return {
+						title: title,
+						content: content
+					}
 				}
 			}
 		}
@@ -97,75 +110,55 @@
 	}
 
 	ContentGenerator
-	.add({
-		name: 'gamersky.com',
-		match: hasName,
-		title: getH1Text,
-		content: getHtml('.Mid2L_con')
+	.add('gamersky.com', 'h1', '.Mid2L_con')
+	.add('movie.douban', 'h1', '#link-report')
+	.add('baike.baidu', 'h1', '.main-content')
+	.add('jianshu.com', 'h1.title', '.show-content')
+	.add('tieba.baidu', 'h1', function () {
+		return [].map.call(
+		$('.d_post_content'), function (content) {
+			return (
+				'<section>' +  content.innerHTML + '</section>'
+			)
+		}).join('')
 	})
-	.add({
-		name: 'movie.douban',
-		match: hasName,
-		title: getH1Text,
-		content: getHtml('#link-report')
-	})
-	.add({
-		name: 'baike.baidu',
-		match: hasName,
-		title: getH1Text,
-		content: getHtml('.main-content')
-	})
-	.add({
-		name: 'jianshu',
-		match: hasName,
-		title: getText('h1.title'),
-		content: getHtml('.show-content')
-	})
-	.add({
-		name: 'tieba.baidu',
-		match: hasName,
-		title: getH1Text,
-		content: function () {
-			return [].map.call(
-			$('.d_post_content'), function (content) {
-				return (
-				'<section>' + 
-					content.innerHTML +
-				'</section>'
-				);
-			}).join('')
-		}
-	})
-	.add({
-		name: 'guancha.cn',
-		match: hasName,
-		title: getText('.content-title1'),
-		content: getHtml('.all-txt')
-	})
-	.add({
-		name: 'tuicool.com',
-		match: hasName,
-		title: getH1Text,
-		content: getHtml('.article_body')
-	})
+	.add('guancha.cn', '.content-title1', '.all-txt')
+	.add('tuicool.com', 'h1', '.article_body')
+	.add('chinanews.com', 'h1', '.left_zw')
+	.add('xinhuanet.com', '#title', '.article')
+	.add('21ccom.net', 'h4', '#contents')
+	.add('chinavalue.net', '.ArticleTitle', '.ArticleContent')
+	//.add('bwchinese.com', 'h1.left', '.main_content3 p')
 
-	function hasName(hostname) {
-		return hostname.indexOf(this.name) > -1
-	}
-
-	function getH1Text() {
-		return $('h1').text()
-	}
-
-	function getText(el) {
-		return function () {
-			return $(el).text()
+	function getText(s) {
+		if (typeof s === 'string') {
+			return $(s).text()
+		} else if (typeof s === 'function') {
+			return s()
+		} else {
+			return null
 		}
 	}
 
-	function getHtml(el) {
-		return function () {
-			return $(el).html()
+	function getHtml(s) {
+		if (typeof s === 'string') {
+			return tryRemoveStyleInfo($(s).clone())
+		} else if (typeof s === 'function') {
+			return s()
+		} else {
+			return null
+		}
+	}
+
+	function tryRemoveStyleInfo(el, deep) {
+		var $el = $(el).attr('style', '')
+
+		$el.children().each(function (i, el) {
+			tryRemoveStyleInfo(el, true)
+		})
+
+		if (!deep) {
+			return $el.html()
 		}
 	}
 
