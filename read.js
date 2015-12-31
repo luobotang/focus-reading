@@ -1,65 +1,71 @@
 (function () {
 
-	tryInit();
+	var TEMPLATE_BUTTON = (
+		'<button id="focus-reading-button">Focus Reading</button>'
+	)
+	var TEMPLATE_PAD = (
+		'<div id="focus-reading-pad">' +
+			'<a id="focus-reading-pad-close-button">×</a>' +
+			'<div id="focus-reading-pad-content"></div>' +
+		'</div>'
+	)
+	var CLASS_READING_PAD_SHOWING = 'focus-reading'
+
+	var ContentGenerator = {
+		generators: []
+	}
+	var $readingPad
 
 	// init as soon as possible
 	// even before document ready
 	function tryInit() {
 		if (document.body) {
-			init();
+			init()
 		} else {
-			setTimeout(tryInit, 100);
+			setTimeout(tryInit, 100)
 		}
 	}
 
 	function init() {
-		var $button = $(
-			'<button id="focus-reading-button">' +
-				'Focus Reading' +
-			'</button>'
-		).appendTo('body');
-		$button.on('click', focusRead);
+		var $button = $(TEMPLATE_BUTTON).appendTo('body')
+		$button.on('click', focusRead)
 
-		$('body').append(
-			'<div id="focus-reading-pad" style="display:none;">' +
-				'<a id="focus-reading-pad-close-button">×</a>' +
-				'<div id="focus-reading-pad-content">' +
-				'</div>' +
-			'</div>'
-		);
+		$readingPad = $(TEMPLATE_PAD).hide().appendTo('body')
+		$readingPad.on('click', '#focus-reading-pad-close-button', hidePad)
+	}
 
-		$(document).on('click', '#focus-reading-pad-close-button', function () {
-			$('#focus-reading-pad').hide();
-			$('html,body').removeClass('focus-reading');
-		});
+	function showPad(title, content) {
+		$readingPad.find('#focus-reading-pad-content').html(
+			'<section>' +
+				'<h1>' + title + '</h1>' +
+				content +
+			'</section>'
+		)
+		$readingPad.show()
+		$('html,body').addClass(CLASS_READING_PAD_SHOWING)
+		$(document).on('keydown', hidePadOnEscKeydown)
+	}
+
+	function hidePad() {
+		$readingPad.hide()
+		$('html,body').removeClass(CLASS_READING_PAD_SHOWING)
+		$(document).off('keydown', hidePadOnEscKeydown)
 	}
 
 	function focusRead() {
-		var content = getContent();
-		if (content) {
-			$('html,body').addClass('focus-reading');
-			$('#focus-reading-pad-content').html(content);
-			$('#focus-reading-pad').show();
+		var article = ContentGenerator.generatArticle()
+		if (article) {
+			showPad(article.title, article.content)
 		} else {
 			alert('Can not find anything to read.')
 		}
 	}
 
-	function getContent() {
-		var content = ContentGenerator.generatorContent();
-		if (content) {
-			return (
-				'<h1>' + content.title + '</h1>' +
-				content.content
-			);
-		} else {
-			return null;
+	function hidePadOnEscKeydown(e) {
+		if (e.keyCode === 27) {
+			hidePad()
 		}
 	}
-
-	var ContentGenerator = {};
-
-	ContentGenerator.generators = [];
 
 	/**
 	 * @param {Object} siteGenerator
@@ -73,24 +79,23 @@
 			this.generators.push(siteGenerator);
 		}
 		return this;
-	};
-
-	ContentGenerator.generatorContent = function () {
-		var siteGenerator;
-		var hostname = location.hostname;
-		for (var i = 0, len = this.generators.length; i < len; i++) {
-			siteGenerator = this.generators[i];
-			if (siteGenerator.match(hostname)) {
-				return {
-					title: siteGenerator.title(),
-					content: siteGenerator.content()
-				};
-			}
-		}
-		return null;
 	}
 
-	// all site generators
+	ContentGenerator.generatArticle = function () {
+		var generator
+		var hostname = location.hostname
+		var i = 0
+		while ((generator = this.generators[i++])) {
+			if (generator.match(hostname)) {
+				return {
+					title: generator.title(),
+					content: generator.content()
+				}
+			}
+		}
+		return null
+	}
+
 	ContentGenerator
 	.add({
 		name: 'gamersky.com',
@@ -128,27 +133,35 @@
 					content.innerHTML +
 				'</section>'
 				);
-			}).join('');
+			}).join('')
 		}
+	})
+	.add({
+		name: 'guancha.cn',
+		match: hasName,
+		title: getText('.content-title1'),
+		content: getHtml('.all-txt')
 	})
 
 	function hasName(hostname) {
-		return hostname.indexOf(this.name) > -1;
+		return hostname.indexOf(this.name) > -1
 	}
 
 	function getH1Text() {
-		return $('h1').text();
+		return $('h1').text()
 	}
 
 	function getText(el) {
 		return function () {
-			return $(el).text();
+			return $(el).text()
 		}
 	}
 
 	function getHtml(el) {
 		return function () {
-			return $(el).html();
+			return $(el).html()
 		}
 	}
+
+	tryInit()
 })()

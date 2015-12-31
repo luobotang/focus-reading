@@ -12,7 +12,8 @@
 			"http://movie.douban.com/*",
 			"http://www.jianshu.com/p/*",
 			"http://baike.baidu.com/*",
-			"http://tieba.baidu.com/p/*"
+			"http://tieba.baidu.com/p/*",
+			"http://www.guancha.cn/*"
 		],
 		"css": [
 			"read.css"
