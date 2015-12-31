@@ -24,6 +24,11 @@ body.focus-reading {
 	background: #fff;
 }
 
+/* for dajia.qq.com: overflow <p> style */
+#focus-reading-pad p {
+	font: 14px/2 arial, "Microsoft Yahei", sans-seirf;
+}
+
 #focus-reading-pad-close-button {
 	position: fixed;
 	top: 0;

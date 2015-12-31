@@ -128,7 +128,7 @@
 	.add('xinhuanet.com', '#title', '.article')
 	.add('21ccom.net', 'h4', '#contents')
 	.add('chinavalue.net', '.ArticleTitle', '.ArticleContent')
-	//.add('bwchinese.com', 'h1.left', '.main_content3 p')
+	.add('dajia.qq.com', 'h1', '#content')
 
 	function getText(s) {
 		if (typeof s === 'string') {
