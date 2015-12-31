@@ -142,6 +142,12 @@
 		title: getText('.content-title1'),
 		content: getHtml('.all-txt')
 	})
+	.add({
+		name: 'tuicool.com',
+		match: hasName,
+		title: getH1Text,
+		content: getHtml('.article_body')
+	})
 
 	function hasName(hostname) {
 		return hostname.indexOf(this.name) > -1

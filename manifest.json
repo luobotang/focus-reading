@@ -1,6 +1,6 @@
 {
 	"name": "Focus Reading",
-	"version": "0.1",
+	"version": "0.1.1",
 	"description": "Focus on Reading",
 	"icons": {
 		"128": "icon.png"
@@ -13,7 +13,8 @@
 			"http://www.jianshu.com/p/*",
 			"http://baike.baidu.com/*",
 			"http://tieba.baidu.com/p/*",
-			"http://www.guancha.cn/*"
+			"http://www.guancha.cn/*",
+			"http://www.tuicool.com/*"
 		],
 		"css": [
 			"read.css"
