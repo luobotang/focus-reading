@@ -1,7 +1,7 @@
 (function () {
 
 	var TEMPLATE_BUTTON = (
-		'<button id="focus-reading-button">Focus Reading</button>'
+		'<button id="focus-reading-button" title="Focus Reading">FR</button>'
 	)
 	var TEMPLATE_PAD = (
 		'<div id="focus-reading-pad">' +
@@ -55,7 +55,7 @@
 		if (article) {
 			showPad(article.title, article.content)
 		} else {
-			alert('Can not find anything to read.')
+			alert('Focus Reading: Can not find anything to read.')
 		}
 	}
 
