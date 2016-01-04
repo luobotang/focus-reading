@@ -129,6 +129,7 @@
 	.add('21ccom.net', 'h4', '#contents')
 	.add('chinavalue.net', '.ArticleTitle', '.ArticleContent')
 	.add('dajia.qq.com', 'h1', '#content')
+	.add('news.163.com', '#h1title', '#endText')
 
 	function getText(s) {
 		if (typeof s === 'string') {

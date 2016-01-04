@@ -19,7 +19,8 @@
 			"http://news.xinhuanet.com/*",
 			"http://www.21ccom.net/*",
 			"http://www.chinavalue.net/*",
-			"http://dajia.qq.com/*"
+			"http://dajia.qq.com/*",
+			"http://news.163.com/*"
 		],
 		"css": [
 			"read.css"
