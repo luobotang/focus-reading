@@ -180,10 +180,16 @@
 		var $item = getZhihuReadingItem()
 		if ($item) {
 			var html = ''
-			var $answer = $item.find('.zm-item-answer-detail')
 
-			html += '<p class="zhihu-user">' + $answer.find('.author-link').text() + '</p>'
-			html += $answer.find('.zm-editable-content').html()
+			html += (
+			'<p class="zhihu-user">' +
+				(
+					$item.find('.zm-item-answer-author-info').html() ||
+					$item.find('.author-info').html()
+				) +
+			'</p>'
+			)
+			html += $item.find('textarea.content').val()
 
 			return html
 		} else {
