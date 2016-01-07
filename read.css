@@ -80,3 +80,8 @@ body.focus-reading {
 	padding: 1em 0;
 	border-bottom: 1px dotted #ccc;
 }
+
+/* for zhihu.com */
+#focus-reading-pad-content .zhihu-user {
+	font-weight: bold;
+}

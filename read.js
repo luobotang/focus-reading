@@ -42,6 +42,9 @@
 		$readingPad.show()
 		$('html,body').addClass(CLASS_READING_PAD_SHOWING)
 		$(document).on('keydown', hidePadOnEscKeydown)
+
+		// everytime show pad, focus at the start
+		$readingPad.animate({'scrollTop': 0}, 500)
 	}
 
 	function hidePad() {
@@ -130,6 +133,7 @@
 	.add('chinavalue.net', '.ArticleTitle', '.ArticleContent')
 	.add('dajia.qq.com', 'h1', '#content')
 	.add('news.163.com', '#h1title', '#endText')
+	.add('zhihu.com', getZhihuTitle, getZhihuContent)
 
 	function getText(s) {
 		if (typeof s === 'string') {
@@ -161,6 +165,51 @@
 		if (!deep) {
 			return $el.html()
 		}
+	}
+
+	function getZhihuTitle() {
+		var $item = getZhihuReadingItem()
+		if ($item) {
+			return $item.find('h2').text()
+		} else {
+			return null
+		}
+	}
+
+	function getZhihuContent() {
+		var $item = getZhihuReadingItem()
+		if ($item) {
+			var html = ''
+			var $answer = $item.find('.zm-item-answer-detail')
+
+			html += '<p class="zhihu-user">' + $answer.find('.author-link').text() + '</p>'
+			html += $answer.find('.zm-editable-content').html()
+
+			return html
+		} else {
+			return null
+		}
+	}
+
+	function getZhihuReadingItem() {
+		var scrollTop = document.body.scrollTop
+		var screenHeight = $(window).height()
+		var $readingItem
+		$('.zm-item-expanded').each(function (i, el) {
+			var $item = $(el)
+			var itemTop = $item.offset().top
+			var itemHeight = $item.height()
+			if (itemTop > scrollTop) {
+				if (itemTop < scrollTop + screenHeight) {
+					$readingItem = $(el)
+					return false
+				}
+			} else if (itemTop + itemHeight > scrollTop) {
+				$readingItem = $(el)
+				return false
+			}
+		})
+		return $readingItem
 	}
 
 	tryInit()
