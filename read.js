@@ -168,54 +168,92 @@
 	}
 
 	function getZhihuTitle() {
-		var $item = getZhihuReadingItem()
-		if ($item) {
-			return $item.find('h2').text()
+		if (location.pathname.startsWith('/question')) {
+			return $('.zm-item-title').text()
 		} else {
-			return null
+			var $item = getZhihuReadingItemOnIndexPage()
+			if ($item) {
+				return $item.find('h2').text()
+			} else {
+				return null
+			}
 		}
 	}
 
 	function getZhihuContent() {
-		var $item = getZhihuReadingItem()
-		if ($item) {
-			var html = ''
-
-			html += (
-			'<p class="zhihu-user">' +
-				(
-					$item.find('.zm-item-answer-author-info').html() ||
-					$item.find('.author-info').html()
-				) +
-			'</p>'
-			)
-			html += $item.find('textarea.content').val()
-
-			return html
+		if (location.pathname.startsWith('/question')) {
+			var $answer = getZhihuReadingItemOnQuestionPage()
+			if ($answer) {
+				return (
+				'<p class="zhihu-user">' +
+					$answer.find('.zm-item-answer-author-info').html() +
+				'</p>' +
+				$answer.find('.zm-editable-content').html()
+				)
+			} else {
+				return null
+			}
 		} else {
-			return null
+			var $item = getZhihuReadingItemOnIndexPage()
+			if ($item) {
+				var html = ''
+
+				html += (
+				'<p class="zhihu-user">' +
+					(
+						$item.find('.zm-item-answer-author-info').html() ||
+						$item.find('.author-info').html()
+					) +
+				'</p>'
+				)
+				html += $item.find('textarea.content').val()
+
+				return html
+			} else {
+				return null
+			}
 		}
 	}
 
-	function getZhihuReadingItem() {
+	function getZhihuReadingItemOnIndexPage() {
+		return findReadingElement('.zm-item-expanded')
+	}
+
+	function getZhihuReadingItemOnQuestionPage() {
+		return findReadingElement('.zm-item-answer')
+	}
+
+	function findReadingElement(selector) {
+		var $items =  $(selector)
+		var $item
+		var i = 0
+		while (($item = $items.eq(i++))) {
+			if (isElementInReading($item)) {
+				return $item
+			}
+		}
+		return null
+	}
+
+	function isElementInReading(el) {
 		var scrollTop = document.body.scrollTop
 		var screenHeight = $(window).height()
-		var $readingItem
-		$('.zm-item-expanded').each(function (i, el) {
-			var $item = $(el)
-			var itemTop = $item.offset().top
-			var itemHeight = $item.height()
-			if (itemTop > scrollTop) {
-				if (itemTop < scrollTop + screenHeight) {
-					$readingItem = $(el)
-					return false
-				}
-			} else if (itemTop + itemHeight > scrollTop) {
-				$readingItem = $(el)
+
+		var $item = $(el)
+		var itemTop = $item.offset().top
+		var itemHeight = $item.height()
+
+		if (itemTop > scrollTop) {
+			if (itemTop < scrollTop + screenHeight) {
+				return true
+			} else {
 				return false
 			}
-		})
-		return $readingItem
+		} else if (itemTop + itemHeight > scrollTop + 100) {
+			return true
+		} else {
+			return false
+		}
 	}
 
 	tryInit()
