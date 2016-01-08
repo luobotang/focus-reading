@@ -225,11 +225,11 @@
 
 	function findReadingElement(selector) {
 		var $items =  $(selector)
-		var $item
+		var item
 		var i = 0
-		while (($item = $items.eq(i++))) {
-			if (isElementInReading($item)) {
-				return $item
+		while ((item = $items[i++])) {
+			if (isElementInReading(item)) {
+				return $(item)
 			}
 		}
 		return null
