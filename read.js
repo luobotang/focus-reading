@@ -186,10 +186,14 @@
 			var $answer = getZhihuReadingItemOnQuestionPage()
 			if ($answer) {
 				return (
-				'<p class="zhihu-user">' +
-					$answer.find('.zm-item-answer-author-info').html() +
-				'</p>' +
-				$answer.find('.zm-editable-content').html()
+					'<p class="zhihu-user">' +
+						(
+							$answer.find('.zm-item-answer-author-info').html()
+						) +
+					'</p>' +
+					processZhihuContentHtml(
+						$answer.find('.zm-editable-content').html()
+					)
 				)
 			} else {
 				return null
@@ -197,23 +201,31 @@
 		} else {
 			var $item = getZhihuReadingItemOnIndexPage()
 			if ($item) {
-				var html = ''
-
-				html += (
-				'<p class="zhihu-user">' +
-					(
-						$item.find('.zm-item-answer-author-info').html() ||
-						$item.find('.author-info').html()
-					) +
-				'</p>'
+				return (
+					'<p class="zhihu-user">' +
+						(
+							$item.find('.zm-item-answer-author-info').html() ||
+							$item.find('.author-info').html()
+						) +
+					'</p>' +
+					processZhihuContentHtml(
+						$item.find('textarea.content').val()
+					)
 				)
-				html += $item.find('textarea.content').val()
-
-				return html
 			} else {
 				return null
 			}
 		}
+	}
+
+	function processZhihuContentHtml(html) {
+		var regNoscript = /\<noscript\>[^<]*\<\/noscript\>/g
+		var regImg = /\<img [^>]*data-original=(\S+) [^>]*\>/g
+		return html
+		.replace(regNoscript, '')
+		.replace(regImg, function (m, src) {
+			return '<img src=' + src + '>'
+		})
 	}
 
 	function getZhihuReadingItemOnIndexPage() {
