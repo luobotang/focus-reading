@@ -134,6 +134,7 @@
 	.add('dajia.qq.com', 'h1', '#content')
 	.add('news.163.com', '#h1title', '#endText')
 	.add('zhihu.com', getZhihuTitle, getZhihuContent)
+	.add('tech.163.com', 'h1', '#endText')
 
 	function getText(s) {
 		if (typeof s === 'string') {

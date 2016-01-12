@@ -21,7 +21,8 @@
 			"http://www.chinavalue.net/*",
 			"http://dajia.qq.com/*",
 			"http://news.163.com/*",
-			"https://www.zhihu.com/*"
+			"https://www.zhihu.com/*",
+			"http://tech.163.com/*"
 		],
 		"css": [
 			"read.css"
