@@ -220,10 +220,10 @@
 
 	function processZhihuContentHtml(html) {
 		var regNoscript = /\<noscript\>[^<]*\<\/noscript\>/g
-		var regImg = /\<img [^>]*data-original=(\S+) [^>]*\>/g
+		var regImg = /\<img [^>]*(data-original|data-actualsrc)=(\S+) [^>]*\>/g
 		return html
 		.replace(regNoscript, '')
-		.replace(regImg, function (m, src) {
+		.replace(regImg, function (m, attr, src) {
 			return '<img src=' + src + '>'
 		})
 	}
