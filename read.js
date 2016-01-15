@@ -18,6 +18,7 @@
 	 * require:
 	 * - jquery
 	 * - ZhihuArticleGenerator
+	 * - BaiduTiebaArticleGenerator
 	 */
 
 	var ArticleGeneratorManager = {}
@@ -138,11 +139,34 @@
 
 	BaiduTiebaArticleGenerator.content = function () {
 		return [].map.call(
-		$('.d_post_content'), function (content) {
-			return (
-				'<section>' +  content.innerHTML + '</section>'
-			)
-		}).join('')
+			$('.j_l_post'), function (post) {
+				var $post = $(post)
+				var $replys = $post.find('.core_reply_content').find('.lzl_single_post')
+				
+				return (
+					'<section class="baidu-tieba-post">' +
+						'<div class="baidu-tieba-user">' +
+							$post.find('.p_author_name').text() +
+						'</div>' +
+						$post.find('.d_post_content').html() +
+						(
+						$replys.length > 0 ?
+							'<ul class="baidu-tieba-replys">' +
+								[].map.call($replys, function (reply) {
+									return (
+									'<li>' +
+										$(reply).find('.j_user_card').attr('username') + '：' +
+										$(reply).find('.lzl_content_main').text() +
+									'</li>'
+									)
+								}).join('') +
+							'</ul>'
+							: ''
+						) +
+					'</section>'
+				)
+			}
+		).join('')
 	}
 
 
@@ -275,7 +299,7 @@
 
 	FocusReadingPad.init = function () {
 		this.$readingPad = $(this.TEMPLATE_PAD).hide().appendTo('body')
-		this.$readingPad.on('click', '#focus-reading-pad-close-button', this.hide)
+		this.$readingPad.on('click', '#focus-reading-pad-close-button', this.hide.bind(this))
 	}
 
 	FocusReadingPad.TEMPLATE_PAD = (

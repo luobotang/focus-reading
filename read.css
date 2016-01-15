@@ -76,9 +76,30 @@ body.focus-reading {
 }
 
 /* for tieba.baidu */
-#focus-reading-pad-content section {
+#focus-reading-pad-content section.baidu-tieba-post {
 	padding: 1em 0;
 	border-bottom: 1px dotted #ccc;
+}
+#focus-reading-pad-content .baidu-tieba-user {
+	
+}
+#focus-reading-pad-content .baidu-tieba-replys {
+	margin-left: 20px;
+}
+#focus-reading-pad-content .baidu-tieba-replys li {
+	margin-bottom: 5px;
+}
+#focus-reading-pad-content .baidu-tieba-replys li:before {
+	content: '';
+	position: absolute;
+	margin-left: -20px;
+	margin-top: 8px;
+	height: 10px;
+	width: 10px;
+	background: #ccc;
+}
+#focus-reading-pad-content .baidu-tieba-replys li:last-child {
+	margin-bottom: 0;
 }
 
 /* for zhihu.com */
