@@ -1,7 +1,18 @@
+/*
+ * Focus Reading 内部逻辑图：
+ *
+ *  ArticleGenerator --(register)--> ArticleGeneratorManager
+ *                                            |
+ *                                        (generate)
+ *                                            |
+ *                                            V
+ *              FocusReadingPad   <----    Article
+ *  
+ */
 (function () {
 
 	/*
-	 * ArticleGenerator
+	 * ArticleGeneratorManager
 	 * 管理网页“内容提供器”
 	 *
 	 * require:
@@ -9,7 +20,7 @@
 	 * - ZhihuArticleGenerator
 	 */
 
-	var ArticleGenerator = {}
+	var ArticleGeneratorManager = {}
 
 	/**
 	 * 1. generator object
@@ -23,7 +34,7 @@
 	 * @param {string|function} - title selector | generator
 	 * @param {string|function} - content selector | generator
 	 */
-	ArticleGenerator.add = function (generator) {
+	ArticleGeneratorManager.add = function (generator) {
 		if (typeof generator === 'object') {
 			this.generators.push(generator)
 		} else if (arguments.length === 3) {
@@ -36,14 +47,14 @@
 		return this
 	}
 
-	ArticleGenerator.generatArticle = function () {
+	ArticleGeneratorManager.generatArticle = function () {
 		var generator
 		var hostname = location.hostname
 		var i = 0
 		while ((generator = this.generators[i++])) {
 			if (hostname.indexOf(generator.name) > -1) {
-				var title = ArticleGenerator.getText(generator.title)
-				var content = ArticleGenerator.getHtml(generator.content)
+				var title = this.getText(generator.title)
+				var content = this.getHtml(generator.content)
 				if (title && content) {
 					return {
 						title: title,
@@ -58,7 +69,7 @@
 	/*
 	 * 初始化配置各站点内容生成器，感觉不在这里配置更好些？
 	 */
-	ArticleGenerator.init = function () {
+	ArticleGeneratorManager.init = function () {
 		this.generators = []
 		this.add('gamersky.com', 'h1', '.Mid2L_con')
 			.add('movie.douban', 'h1', '#link-report')
@@ -77,7 +88,7 @@
 			.add('tech.163.com', 'h1', '#endText')
 	}
 
-	ArticleGenerator.getText = function (s) {
+	ArticleGeneratorManager.getText = function (s) {
 		if (typeof s === 'string') {
 			return $(s).text()
 		} else if (typeof s === 'function') {
@@ -87,9 +98,9 @@
 		}
 	}
 
-	ArticleGenerator.getHtml = function (s) {
+	ArticleGeneratorManager.getHtml = function (s) {
 		if (typeof s === 'string') {
-			return ArticleGenerator.tryRemoveStyleInfo($(s).clone())
+			return this.tryRemoveStyleInfo($(s).clone())
 		} else if (typeof s === 'function') {
 			return s()
 		} else {
@@ -97,11 +108,11 @@
 		}
 	}
 
-	ArticleGenerator.tryRemoveStyleInfo = function (el, deep) {
+	ArticleGeneratorManager.tryRemoveStyleInfo = function (el, deep) {
 		var $el = $(el).attr('style', '')
 
 		$el.children().each(function (i, el) {
-			ArticleGenerator.tryRemoveStyleInfo(el, true)
+			ArticleGeneratorManager.tryRemoveStyleInfo(el, true)
 		})
 
 		if (!deep) {
@@ -398,7 +409,7 @@
 	 *
 	 * require:
 	 * - jquery
-	 * - ArticleGenerator
+	 * - ArticleGeneratorManager
 	 * - FocusReadingPad
 	 * - FocusReadingLinkTip
 	 */
@@ -421,7 +432,7 @@
 		var $button = $(TEMPLATE_BUTTON).appendTo('body')
 		$button.on('click', focusRead)
 
-		ArticleGenerator.init()
+		ArticleGeneratorManager.init()
 		FocusReadingPad.init()
 		FocusReadingLinkTip.init()
 
@@ -436,7 +447,7 @@
 	}
 
 	function focusRead() {
-		var article = ArticleGenerator.generatArticle()
+		var article = ArticleGeneratorManager.generatArticle()
 		if (article) {
 			FocusReadingPad.show(article.title, article.content)
 			FocusReadingLinkTip.stop()
