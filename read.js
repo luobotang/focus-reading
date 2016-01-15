@@ -32,6 +32,13 @@
 
 		$readingPad = $(TEMPLATE_PAD).hide().appendTo('body')
 		$readingPad.on('click', '#focus-reading-pad-close-button', hidePad)
+
+		/*
+		 * 自动进入专注阅读模式
+		 */
+		if (location.search.indexOf('focus-reading=true') > 0) {
+			focusRead()
+		}
 	}
 
 	function showPad(title, content) {

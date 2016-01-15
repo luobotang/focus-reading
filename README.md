@@ -38,3 +38,7 @@ Focus Reading£¨×¨×¢ÔÄ¶Á£©£¬Ò»¿î Chrome ²å¼þ£¬°ïÖúÄãÔÚÍøÕ¾×¨×¢ä¯ÀÀÎÄÕÂ£¬ÅÅ³ý¸ÉÈÅ¡
 6. µã»÷¸Ã°´Å¥£¬½øÈë×¨×¢ÔÄ¶ÁÄ£Ê½
 
     ![×¨×¢ÔÄ¶ÁÄ£Ê½](images/focus.png)
+
+# ÆäËû
+
+- v0.1.4 Æð£¬Ö§³Ö url ÖÐ¸½¼Ó²éÑ¯²ÎÊý focus-reading=true ºó×Ô¶¯½øÈë×¨×¢ÔÄ¶ÁÄ£Ê½
