@@ -109,6 +109,8 @@
 		}
 	}
 
+
+
 	/*
 	 * BaiduTiebaArticleGenerator
 	 * 用于百度贴吧的内容生成器
@@ -118,8 +120,11 @@
 	 */
 
 	var BaiduTiebaArticleGenerator = {}
+
 	BaiduTiebaArticleGenerator.name = 'tieba.baidu'
+
 	BaiduTiebaArticleGenerator.title = 'h1'
+
 	BaiduTiebaArticleGenerator.content = function () {
 		return [].map.call(
 		$('.d_post_content'), function (content) {
@@ -128,6 +133,8 @@
 			)
 		}).join('')
 	}
+
+
 
 	/*
 	 * ZhihuArticleGenerator
@@ -242,6 +249,8 @@
 		}
 	}
 
+
+
 	/*
 	 * FocusReadingPad
 	 * 文章阅读面板
@@ -291,6 +300,8 @@
 			FocusReadingPad.hide()
 		}
 	}
+
+
 
 	/*
 	 * FocusReadingLinkTip
@@ -379,6 +390,8 @@
 
 		return rest + (search.length > 0 ? search + '&focus-reading=true' : '?focus-reading=true') + hash
 	}
+
+
 
 	/*
 	 * main process
