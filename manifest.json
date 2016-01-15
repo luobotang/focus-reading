@@ -22,7 +22,8 @@
 			"http://dajia.qq.com/*",
 			"http://news.163.com/*",
 			"https://www.zhihu.com/*",
-			"http://tech.163.com/*"
+			"http://tech.163.com/*",
+			"http://www.udpwork.com/*"
 		],
 		"css": [
 			"read.css"
