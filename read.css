@@ -100,11 +100,12 @@ body.focus-reading {
 	margin: 0;
 }
 
-.focus-reading-tip-for-link {
-	display: none;
+a:link > .focus-reading-tip-for-link {
+	display: none !important;
 	position: absolute;
 	width: 55px;
-	margin-left: -55px;
+	margin: 0 0 0 -55px;
+	padding: 0;
 	text-align: center;
 	color: #fff;
 	background: #999;
@@ -114,5 +115,5 @@ body.focus-reading {
 }
 
 a:hover > .focus-reading-tip-for-link {
-	display: block;
+	display: block !important;
 }
