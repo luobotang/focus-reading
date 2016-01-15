@@ -99,3 +99,19 @@ body.focus-reading {
 #focus-reading-pad-content .zhihu-user .avatar-link img {
 	margin: 0;
 }
+
+.focus-reading-tip-for-link {
+	display: none;
+	position: absolute;
+	margin-top: -19px;
+	padding: 0 5px;
+	color: #fff;
+	background: #999;
+	border-radius: 5px;
+	cursor: pointer;
+	font: normal 14px/20px arial, "Microsoft Yahei", sans-seirf;
+}
+
+a:hover > .focus-reading-tip-for-link {
+	display: block;
+}

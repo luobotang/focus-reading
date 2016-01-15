@@ -15,6 +15,7 @@
 		generators: []
 	}
 	var $readingPad
+	var isTrackLinkEnable = true
 
 	// init as soon as possible
 	// even before document ready
@@ -32,6 +33,8 @@
 
 		$readingPad = $(TEMPLATE_PAD).hide().appendTo('body')
 		$readingPad.on('click', '#focus-reading-pad-close-button', hidePad)
+
+		startTrackLinkToGiveFocusReadingTip()
 
 		/*
 		 * 自动进入专注阅读模式
@@ -274,6 +277,81 @@
 		} else {
 			return false
 		}
+	}
+
+	function startTrackLinkToGiveFocusReadingTip() {
+		var lazyTimer = null
+		var $link = null
+		var url
+		$(document).on('mouseenter mouseleave', 'a', function (e) {
+			if (isTrackLinkEnable) {
+				if (e.type === 'mouseleave' || lazyTimer) {
+					clearTimeout(lazyTimer)
+					lazyTimer = null
+					$link = null
+				} else {
+					$link = $(e.currentTarget)
+					url = $link.attr('href')
+					if (
+						url &&
+						!(url.startsWith('#') || url.startsWith('javascript')) &&
+						$link.find('.focus-reading-tip-for-link').length === 0
+					) {
+						lazyTimer = setTimeout(function () {
+							$link.prepend(makeFocusReadingTip(
+								addFocusReadingTagToUrl($link.attr('href'))
+							))
+						}, 100)
+					}
+				}
+			} else {
+				clearTimeout(lazyTimer)
+				lazyTimer = null
+				$link = null
+			}
+		}).on('click', '.focus-reading-tip-for-link', function (e) {
+			var url = $(e.currentTarget).attr('data-url')
+			if (url) {
+				window.open(url, 'focus-reading-window')
+			}
+			e.preventDefault()
+		})
+	}
+
+	function stopTrackLinkToGiveFocusReadingTip() {
+		isTrackLinkEnable = false
+	}
+
+	function makeFocusReadingTip(url) {
+		return (
+		'<span class="focus-reading-tip-for-link" data-url="' + url + '">' +
+			'专注阅读' +
+		'</span>'
+		)
+	}
+
+	function addFocusReadingTagToUrl(url) {
+		var rest = url
+		var search
+		var hash
+
+		var hashIndex = rest.indexOf('#')
+		if (hash > -1) {
+			hash = rest.substr(hashIndex)
+			rest = rest.substr(0, hashIndex)
+		} else {
+			hash = ''
+		}
+
+		var searchIndex = rest.indexOf('?')
+		if (searchIndex > -1) {
+			search = rest.substr(searchIndex)
+			rest = rest.substr(0, searchIndex)
+		} else {
+			search = ''
+		}
+
+		return rest + (search.length > 0 ? '&focus-reading=true' : '?focus-reading=true') + hash
 	}
 
 	tryInit()

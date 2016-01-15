@@ -41,4 +41,4 @@ Focus Reading£¨×¨×¢ÔÄ¶Á£©£¬Ò»¿î Chrome ²å¼þ£¬°ïÖúÄãÔÚÍøÕ¾×¨×¢ä¯ÀÀÎÄÕÂ£¬ÅÅ³ý¸ÉÈÅ¡
 
 # ÆäËû
 
-- v0.1.4 Æð£¬Ö§³Ö url ÖÐ¸½¼Ó²éÑ¯²ÎÊý focus-reading=true ºó×Ô¶¯½øÈë×¨×¢ÔÄ¶ÁÄ£Ê½
+- v0.1.4 Æð£¬Ö§³Ö url ÖÐ¸½¼Ó²éÑ¯²ÎÊý focus-reading=true ºó×Ô¶¯½øÈë×¨×¢ÔÄ¶ÁÄ£Ê½£»Ö§³ÖÔÚÒ³ÃæÁ´½ÓÖÐÌí¼Ó¡°×¨×¢ÔÄ¶Á¡±±ê¼Ç£¬½ø¶ø´ò¿ªÐÂÒ³ÃæºóÖ±½Ó½øÈë×¨×¢ÔÄ¶ÁÄ£Ê½¡£
