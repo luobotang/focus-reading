@@ -103,13 +103,14 @@ body.focus-reading {
 .focus-reading-tip-for-link {
 	display: none;
 	position: absolute;
-	margin-top: -19px;
-	padding: 0 5px;
+	width: 55px;
+	margin-left: -55px;
+	text-align: center;
 	color: #fff;
 	background: #999;
 	border-radius: 5px;
 	cursor: pointer;
-	font: normal 14px/20px arial, "Microsoft Yahei", sans-seirf;
+	font: normal 12px/20px arial, "Microsoft Yahei", sans-seirf;
 }
 
 a:hover > .focus-reading-tip-for-link {

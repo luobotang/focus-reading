@@ -336,7 +336,7 @@
 		var hash
 
 		var hashIndex = rest.indexOf('#')
-		if (hash > -1) {
+		if (hashIndex > -1) {
 			hash = rest.substr(hashIndex)
 			rest = rest.substr(0, hashIndex)
 		} else {
@@ -351,7 +351,7 @@
 			search = ''
 		}
 
-		return rest + (search.length > 0 ? '&focus-reading=true' : '?focus-reading=true') + hash
+		return rest + (search.length > 0 ? search + '&focus-reading=true' : '?focus-reading=true') + hash
 	}
 
 	tryInit()
