@@ -1,86 +1,19 @@
 (function () {
 
-	var TEMPLATE_BUTTON = (
-		'<button id="focus-reading-button" title="Focus Reading">FR</button>'
-	)
-	var TEMPLATE_PAD = (
-		'<div id="focus-reading-pad">' +
-			'<a id="focus-reading-pad-close-button">×</a>' +
-			'<div id="focus-reading-pad-content"></div>' +
-		'</div>'
-	)
-	var CLASS_READING_PAD_SHOWING = 'focus-reading'
+	/*
+	 * ArticleGenerator
+	 * 管理网页“内容提供器”
+	 *
+	 * require:
+	 * - jquery
+	 * - ZhihuArticleGenerator
+	 */
 
-	var ContentGenerator = {
-		generators: []
-	}
-	var $readingPad
-	var isTrackLinkEnable = true
-
-	// init as soon as possible
-	// even before document ready
-	function tryInit() {
-		if (document.body) {
-			init()
-		} else {
-			setTimeout(tryInit, 100)
-		}
-	}
-
-	function init() {
-		var $button = $(TEMPLATE_BUTTON).appendTo('body')
-		$button.on('click', focusRead)
-
-		$readingPad = $(TEMPLATE_PAD).hide().appendTo('body')
-		$readingPad.on('click', '#focus-reading-pad-close-button', hidePad)
-
-		startTrackLinkToGiveFocusReadingTip()
-
-		/*
-		 * 自动进入专注阅读模式
-		 */
-		if (location.search.indexOf('focus-reading=true') > 0) {
-			focusRead()
-		}
-	}
-
-	function showPad(title, content) {
-		$readingPad.find('#focus-reading-pad-content').html(
-			'<h1>' + title + '</h1>' +
-			content
-		)
-		$readingPad.show()
-		$('html,body').addClass(CLASS_READING_PAD_SHOWING)
-		$(document).on('keydown', hidePadOnEscKeydown)
-
-		// everytime show pad, focus at the start
-		$readingPad.animate({'scrollTop': 0}, 500)
-	}
-
-	function hidePad() {
-		$readingPad.hide()
-		$('html,body').removeClass(CLASS_READING_PAD_SHOWING)
-		$(document).off('keydown', hidePadOnEscKeydown)
-	}
-
-	function focusRead() {
-		var article = ContentGenerator.generatArticle()
-		if (article) {
-			showPad(article.title, article.content)
-		} else {
-			alert('Focus Reading: Can not find anything to read.')
-		}
-	}
-
-	function hidePadOnEscKeydown(e) {
-		if (e.keyCode === 27) {
-			hidePad()
-		}
-	}
+	var ArticleGenerator = {}
 
 	/**
 	 * 1. generator object
-	 * @param {Object} siteGenerator
+	 * @param {Object} generator
 	 *   - name {sring}
 	 *   - title {string|function}
 	 *   - content {string|function}
@@ -90,8 +23,8 @@
 	 * @param {string|function} - title selector | generator
 	 * @param {string|function} - content selector | generator
 	 */
-	ContentGenerator.add = function (generator) {
-		if (typeof siteGenerator === 'object') {
+	ArticleGenerator.add = function (generator) {
+		if (typeof generator === 'object') {
 			this.generators.push(generator)
 		} else if (arguments.length === 3) {
 			this.generators.push({
@@ -103,14 +36,14 @@
 		return this
 	}
 
-	ContentGenerator.generatArticle = function () {
+	ArticleGenerator.generatArticle = function () {
 		var generator
 		var hostname = location.hostname
 		var i = 0
 		while ((generator = this.generators[i++])) {
 			if (hostname.indexOf(generator.name) > -1) {
-				var title = getText(generator.title)
-				var content = getHtml(generator.content)
+				var title = ArticleGenerator.getText(generator.title)
+				var content = ArticleGenerator.getHtml(generator.content)
 				if (title && content) {
 					return {
 						title: title,
@@ -122,31 +55,29 @@
 		return null
 	}
 
-	ContentGenerator
-	.add('gamersky.com', 'h1', '.Mid2L_con')
-	.add('movie.douban', 'h1', '#link-report')
-	.add('baike.baidu', 'h1', '.main-content')
-	.add('jianshu.com', 'h1.title', '.show-content')
-	.add('tieba.baidu', 'h1', function () {
-		return [].map.call(
-		$('.d_post_content'), function (content) {
-			return (
-				'<section>' +  content.innerHTML + '</section>'
-			)
-		}).join('')
-	})
-	.add('guancha.cn', '.content-title1', '.all-txt')
-	.add('tuicool.com', 'h1', '.article_body')
-	.add('chinanews.com', 'h1', '.left_zw')
-	.add('xinhuanet.com', '#title', '.article')
-	.add('21ccom.net', 'h4', '#contents')
-	.add('chinavalue.net', '.ArticleTitle', '.ArticleContent')
-	.add('dajia.qq.com', 'h1', '#content')
-	.add('news.163.com', '#h1title', '#endText')
-	.add('zhihu.com', getZhihuTitle, getZhihuContent)
-	.add('tech.163.com', 'h1', '#endText')
+	/*
+	 * 初始化配置各站点内容生成器，感觉不在这里配置更好些？
+	 */
+	ArticleGenerator.init = function () {
+		this.generators = []
+		this.add('gamersky.com', 'h1', '.Mid2L_con')
+			.add('movie.douban', 'h1', '#link-report')
+			.add('baike.baidu', 'h1', '.main-content')
+			.add('jianshu.com', 'h1.title', '.show-content')
+			.add(BaiduTiebaArticleGenerator)
+			.add('guancha.cn', '.content-title1', '.all-txt')
+			.add('tuicool.com', 'h1', '.article_body')
+			.add('chinanews.com', 'h1', '.left_zw')
+			.add('xinhuanet.com', '#title', '.article')
+			.add('21ccom.net', 'h4', '#contents')
+			.add('chinavalue.net', '.ArticleTitle', '.ArticleContent')
+			.add('dajia.qq.com', 'h1', '#content')
+			.add('news.163.com', '#h1title', '#endText')
+			.add(ZhihuArticleGenerator)
+			.add('tech.163.com', 'h1', '#endText')
+	}
 
-	function getText(s) {
+	ArticleGenerator.getText = function (s) {
 		if (typeof s === 'string') {
 			return $(s).text()
 		} else if (typeof s === 'function') {
@@ -156,9 +87,9 @@
 		}
 	}
 
-	function getHtml(s) {
+	ArticleGenerator.getHtml = function (s) {
 		if (typeof s === 'string') {
-			return tryRemoveStyleInfo($(s).clone())
+			return ArticleGenerator.tryRemoveStyleInfo($(s).clone())
 		} else if (typeof s === 'function') {
 			return s()
 		} else {
@@ -166,11 +97,11 @@
 		}
 	}
 
-	function tryRemoveStyleInfo(el, deep) {
+	ArticleGenerator.tryRemoveStyleInfo = function (el, deep) {
 		var $el = $(el).attr('style', '')
 
 		$el.children().each(function (i, el) {
-			tryRemoveStyleInfo(el, true)
+			ArticleGenerator.tryRemoveStyleInfo(el, true)
 		})
 
 		if (!deep) {
@@ -178,11 +109,43 @@
 		}
 	}
 
-	function getZhihuTitle() {
+	/*
+	 * BaiduTiebaArticleGenerator
+	 * 用于百度贴吧的内容生成器
+	 *
+	 * require:
+	 * - jquery
+	 */
+
+	var BaiduTiebaArticleGenerator = {}
+	BaiduTiebaArticleGenerator.name = 'tieba.baidu'
+	BaiduTiebaArticleGenerator.title = 'h1'
+	BaiduTiebaArticleGenerator.content = function () {
+		return [].map.call(
+		$('.d_post_content'), function (content) {
+			return (
+				'<section>' +  content.innerHTML + '</section>'
+			)
+		}).join('')
+	}
+
+	/*
+	 * ZhihuArticleGenerator
+	 * 用于知乎网站的内容生成器
+	 *
+	 * require:
+	 * - jquery
+	 */
+
+	var ZhihuArticleGenerator = {}
+
+	ZhihuArticleGenerator.name = 'zhihu.com'
+
+	ZhihuArticleGenerator.title = function () {
 		if (location.pathname.startsWith('/question')) {
 			return $('.zm-item-title').text()
 		} else {
-			var $item = getZhihuReadingItemOnIndexPage()
+			var $item = ZhihuArticleGenerator.getReadingItemOnIndexPage()
 			if ($item) {
 				return $item.find('h2').text()
 			} else {
@@ -191,9 +154,9 @@
 		}
 	}
 
-	function getZhihuContent() {
+	ZhihuArticleGenerator.content = function () {
 		if (location.pathname.startsWith('/question')) {
-			var $answer = getZhihuReadingItemOnQuestionPage()
+			var $answer = ZhihuArticleGenerator.getReadingItemOnQuestionPage()
 			if ($answer) {
 				return (
 					'<p class="zhihu-user">' +
@@ -201,7 +164,7 @@
 							$answer.find('.zm-item-answer-author-info').html()
 						) +
 					'</p>' +
-					processZhihuContentHtml(
+					ZhihuArticleGenerator.processHTML(
 						$answer.find('.zm-editable-content').html()
 					)
 				)
@@ -209,7 +172,7 @@
 				return null
 			}
 		} else {
-			var $item = getZhihuReadingItemOnIndexPage()
+			var $item = ZhihuArticleGenerator.getReadingItemOnIndexPage()
 			if ($item) {
 				return (
 					'<p class="zhihu-user">' +
@@ -218,7 +181,7 @@
 							$item.find('.author-info').html()
 						) +
 					'</p>' +
-					processZhihuContentHtml(
+					ZhihuArticleGenerator.processHTML(
 						$item.find('textarea.content').val()
 					)
 				)
@@ -228,7 +191,7 @@
 		}
 	}
 
-	function processZhihuContentHtml(html) {
+	ZhihuArticleGenerator.processHTML = function (html) {
 		var regNoscript = /\<noscript\>[^<]*\<\/noscript\>/g
 		var regImg = /\<img [^>]*(data-original|data-actualsrc)=(\S+)[^>]*\>/g
 		return html
@@ -238,27 +201,27 @@
 		})
 	}
 
-	function getZhihuReadingItemOnIndexPage() {
-		return findReadingElement('.zm-item-expanded')
+	ZhihuArticleGenerator.getReadingItemOnIndexPage = function () {
+		return this.findReadingElement('.zm-item-expanded')
 	}
 
-	function getZhihuReadingItemOnQuestionPage() {
-		return findReadingElement('.zm-item-answer')
+	ZhihuArticleGenerator.getReadingItemOnQuestionPage = function () {
+		return this.findReadingElement('.zm-item-answer')
 	}
 
-	function findReadingElement(selector) {
+	ZhihuArticleGenerator.findReadingElement = function (selector) {
 		var $items =  $(selector)
 		var item
 		var i = 0
 		while ((item = $items[i++])) {
-			if (isElementInReading(item)) {
+			if (this.isElementInReading(item)) {
 				return $(item)
 			}
 		}
 		return null
 	}
 
-	function isElementInReading(el) {
+	ZhihuArticleGenerator.isElementInReading = function (el) {
 		var scrollTop = document.body.scrollTop
 		var screenHeight = $(window).height()
 
@@ -279,27 +242,86 @@
 		}
 	}
 
-	function startTrackLinkToGiveFocusReadingTip() {
+	/*
+	 * FocusReadingPad
+	 * 文章阅读面板
+	 *
+	 * require:
+	 * - jquery
+	 * - FocusReadingLinkTip
+	 */
+
+	var FocusReadingPad = {}
+
+	FocusReadingPad.init = function () {
+		this.$readingPad = $(this.TEMPLATE_PAD).hide().appendTo('body')
+		this.$readingPad.on('click', '#focus-reading-pad-close-button', this.hide)
+	}
+
+	FocusReadingPad.TEMPLATE_PAD = (
+		'<div id="focus-reading-pad">' +
+			'<a id="focus-reading-pad-close-button">×</a>' +
+			'<div id="focus-reading-pad-content"></div>' +
+		'</div>'
+	)
+	FocusReadingPad.CLASS_READING_PAD_SHOWING = 'focus-reading'
+
+	FocusReadingPad.show = function (title, content) {
+		this.$readingPad.find('#focus-reading-pad-content').html(
+			'<h1>' + title + '</h1>' +
+			content
+		)
+		this.$readingPad.show()
+		$('html,body').addClass(this.CLASS_READING_PAD_SHOWING)
+		$(document).on('keydown', this._hideOnEscKeydown)
+
+		// everytime show pad, focus at the start
+		this.$readingPad.animate({'scrollTop': 0}, 500)
+	}
+
+	FocusReadingPad.hide = function () {
+		this.$readingPad.hide()
+		$('html,body').removeClass(this.CLASS_READING_PAD_SHOWING)
+		$(document).off('keydown', this._hideOnEscKeydown)
+		FocusReadingLinkTip.start()
+	}
+
+	FocusReadingPad._hideOnEscKeydown = function (e) {
+		if (e.keyCode === 27) {
+			FocusReadingPad.hide()
+		}
+	}
+
+	/*
+	 * FocusReadingLinkTip
+	 * 跟踪鼠标在页面有效链接上的停留，显示“专注阅读”，以便在打开的页面中直接启用阅读模式
+	 *
+	 * require:
+	 * - jquery
+	 */
+
+	var FocusReadingLinkTip = {}
+
+	FocusReadingLinkTip.init = function () {
 		var lazyTimer = null
 		var $link = null
-		var url
 		$(document).on('mouseenter mouseleave', 'a', function (e) {
-			if (isTrackLinkEnable) {
+			if (FocusReadingLinkTip._enabled) {
 				if (e.type === 'mouseleave' || lazyTimer) {
 					clearTimeout(lazyTimer)
 					lazyTimer = null
 					$link = null
 				} else {
 					$link = $(e.currentTarget)
-					url = $link.attr('href')
+					var url = $link.attr('href')
 					if (
 						url &&
 						!(url.startsWith('#') || url.startsWith('javascript')) &&
 						$link.find('.focus-reading-tip-for-link').length === 0
 					) {
 						lazyTimer = setTimeout(function () {
-							$link.prepend(makeFocusReadingTip(
-								addFocusReadingTagToUrl($link.attr('href'))
+							$link.prepend(FocusReadingLinkTip._makeFocusReadingTip(
+								FocusReadingLinkTip._addFocusReadingTagToUrl($link.attr('href'))
 							))
 						}, 100)
 					}
@@ -318,11 +340,15 @@
 		})
 	}
 
-	function stopTrackLinkToGiveFocusReadingTip() {
-		isTrackLinkEnable = false
+	FocusReadingLinkTip.start = function () {
+		this._enabled = true
 	}
 
-	function makeFocusReadingTip(url) {
+	FocusReadingLinkTip.stop = function () {
+		this._enabled = false
+	}
+
+	FocusReadingLinkTip._makeFocusReadingTip = function (url) {
 		return (
 		'<span class="focus-reading-tip-for-link" data-url="' + url + '">' +
 			'专注阅读' +
@@ -330,7 +356,7 @@
 		)
 	}
 
-	function addFocusReadingTagToUrl(url) {
+	FocusReadingLinkTip._addFocusReadingTagToUrl = function (url) {
 		var rest = url
 		var search
 		var hash
@@ -352,6 +378,58 @@
 		}
 
 		return rest + (search.length > 0 ? search + '&focus-reading=true' : '?focus-reading=true') + hash
+	}
+
+	/*
+	 * main process
+	 *
+	 * require:
+	 * - jquery
+	 * - ArticleGenerator
+	 * - FocusReadingPad
+	 * - FocusReadingLinkTip
+	 */
+
+	var TEMPLATE_BUTTON = (
+		'<button id="focus-reading-button" title="Focus Reading">FR</button>'
+	)
+
+	// init as soon as possible
+	// even before document ready
+	function tryInit() {
+		if (document.body) {
+			init()
+		} else {
+			setTimeout(tryInit, 100)
+		}
+	}
+
+	function init() {
+		var $button = $(TEMPLATE_BUTTON).appendTo('body')
+		$button.on('click', focusRead)
+
+		ArticleGenerator.init()
+		FocusReadingPad.init()
+		FocusReadingLinkTip.init()
+
+		/*
+		 * 自动进入专注阅读模式
+		 */
+		if (location.search.indexOf('focus-reading=true') > 0) {
+			focusRead()
+		} else {
+			FocusReadingLinkTip.start()
+		}
+	}
+
+	function focusRead() {
+		var article = ArticleGenerator.generatArticle()
+		if (article) {
+			FocusReadingPad.show(article.title, article.content)
+			FocusReadingLinkTip.stop()
+		} else {
+			alert('Focus Reading: Can not find anything to read.')
+		}
 	}
 
 	tryInit()
