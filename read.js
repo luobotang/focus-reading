@@ -136,7 +136,7 @@
 
 	BaiduTiebaArticleGenerator.name = 'tieba.baidu'
 
-	BaiduTiebaArticleGenerator.title = 'h1'
+	BaiduTiebaArticleGenerator.title = '.core_title_txt'
 
 	BaiduTiebaArticleGenerator.content = function () {
 		return [].map.call(
