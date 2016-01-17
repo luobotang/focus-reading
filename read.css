@@ -39,11 +39,14 @@ body.focus-reading {
 	text-align: center;
 	cursor: pointer;
 	text-decoration: none;
+	color: #ccc;
+	background: #fff;
 }
 
 #focus-reading-pad-close-button:hover,
 #focus-reading-pad-close-button:active {
-	color: blue;
+	color: #666 !important;
+	background: #f0f0f0;
 }
 
 #focus-reading-pad-content {

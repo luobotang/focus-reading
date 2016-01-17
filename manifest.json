@@ -10,6 +10,7 @@
 		"matches": [
 			"http://www.gamersky.com/*",
 			"http://movie.douban.com/*",
+			"https://movie.douban.com/*",
 			"http://www.jianshu.com/p/*",
 			"http://baike.baidu.com/*",
 			"http://tieba.baidu.com/p/*",
