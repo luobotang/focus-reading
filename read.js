@@ -317,19 +317,23 @@
 			'<h1>' + title + '</h1>' +
 			content
 		)
-		this.$readingPad.show()
+
 		$('html,body').addClass(this.CLASS_READING_PAD_SHOWING)
 		$(document).on('keydown', this._hideOnEscKeydown)
 
-		// everytime show pad, focus at the start
-		this.$readingPad.animate({'scrollTop': 0}, 500)
+		this.$readingPad.fadeIn(function () {
+			// everytime show pad, focus at the start
+			this.$readingPad.animate({'scrollTop': 0}, 500)
+		}.bind(this))
 	}
 
 	FocusReadingPad.hide = function () {
-		this.$readingPad.hide()
-		$('html,body').removeClass(this.CLASS_READING_PAD_SHOWING)
 		$(document).off('keydown', this._hideOnEscKeydown)
-		FocusReadingLinkTip.start()
+
+		this.$readingPad.fadeOut(function () {
+			$('html,body').removeClass(this.CLASS_READING_PAD_SHOWING)
+			FocusReadingLinkTip.start()
+		}.bind(this))
 	}
 
 	FocusReadingPad._hideOnEscKeydown = function (e) {
