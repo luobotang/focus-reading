@@ -24,7 +24,8 @@
 			"http://news.163.com/*",
 			"https://www.zhihu.com/*",
 			"http://tech.163.com/*",
-			"http://www.udpwork.com/*"
+			"http://www.udpwork.com/*",
+			"http://36kr.com/*"
 		],
 		"css": [
 			"read.css"

@@ -88,6 +88,7 @@
 			.add(ZhihuArticleGenerator)
 			.add('tech.163.com', 'h1', '#endText')
 			.add('udpwork.com', '#rss_item h2:first', '#rss_item .content')
+			.add('36kr.com', 'h1', '.article')
 	}
 
 	ArticleGeneratorManager.getText = function (s) {
