@@ -133,5 +133,5 @@ a:link > .focus-reading-tip-for-link {
 }
 
 a:hover > .focus-reading-tip-for-link {
-	display: block !important;
+	display: inline-block !important;
 }
