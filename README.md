@@ -13,7 +13,7 @@ Focus Reading（专注阅读），一款 Chrome 插件，帮助你在网站专�
 - http://tieba.baidu.com/p/*
 - http://www.zhihu.com/
 
-更多支持站点请查看 manifest.json 文件中的配置
+更多支持站点请查看 extension/manifest.json 文件中的配置
 
 # 如何使用？
 
