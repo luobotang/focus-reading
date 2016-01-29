@@ -1,10 +1,12 @@
+# Focus Reading
+
 ![Focus Reading](extension/images/icon.png)
 
-# 介绍
+## 介绍
 
 Focus Reading（专注阅读），一款 Chrome 插件，帮助你在网站专注浏览文章，排除干扰。
 
-# 支持站点
+## 支持站点
 
 - http://www.gamersky.com/*
 - http://movie.douban.com/*
@@ -15,7 +17,7 @@ Focus Reading（专注阅读），一款 Chrome 插件，帮助你在网站专�
 
 更多支持站点请查看 extension/manifest.json 文件中的配置
 
-# 如何使用？
+## 如何使用？
 
 1. 首先，你得有 Chrome 浏览器
 2. 然后，在浏览器地址栏输入以下内容并回车：
@@ -35,6 +37,10 @@ Focus Reading（专注阅读），一款 Chrome 插件，帮助你在网站专�
 
     ![专注阅读模式](extension/images/focus.png)
 
-# 其他
+## 更新记录
 
-- v0.1.4 起，支持 url 中附加查询参数 focus-reading=true 后自动进入专注阅读模式；支持在页面链接中添加“专注阅读”标记，进而打开新页面后直接进入专注阅读模式。
+- v0.2.0
+    - 重构
+- v0.1.4
+    - 支持 url 中附加查询参数 focus-reading=true 后自动进入专注阅读模式
+    - 支持在页面链接中添加“专注阅读”标记，进而打开新页面后直接进入专注阅读模式。
