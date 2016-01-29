@@ -1,0 +1,23 @@
+#focus-reading-pad {
+	section.baidu-tieba-post {
+		padding: 1em 0;
+		border-bottom: 1px dotted #ccc;
+	}
+
+	.baidu-tieba-replys {
+		margin-left: 20px;
+	
+		li:before {
+			content: '';
+			position: absolute;
+			margin-left: -20px;
+			margin-top: 8px;
+			height: 10px;
+			width: 10px;
+			background: #ccc;
+		}
+		li:last-child {
+			margin-bottom: 0;
+		}
+	}
+}

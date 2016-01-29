@@ -1,0 +1,22 @@
+{
+  "name": "focus-reading",
+  "version": "0.2.0",
+  "description": "Focus on Reading chrome extension",
+  "main": "src/read.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luobotang/focus-reading.git"
+  },
+  "author": "luobotang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/luobotang/focus-reading/issues"
+  },
+  "homepage": "https://github.com/luobotang/focus-reading#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^4.0.1",
+    "grunt-contrib-less": "^1.1.0",
+    "jquery": "^2.2.0"
+  }
+}

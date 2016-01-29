@@ -1,9 +1,9 @@
 {
 	"name": "Focus Reading",
-	"version": "0.1.5",
+	"version": "0.2",
 	"description": "Focus on Reading",
 	"icons": {
-		"128": "icon.png"
+		"128": "images/icon.png"
 	},
 	"manifest_version": 2,
 	"content_scripts": [{
@@ -28,11 +28,10 @@
 			"http://36kr.com/*"
 		],
 		"css": [
-			"read.css"
+			"main.css"
 		],
 		"js": [
-			"jquery.min.js",
-			"read.js"
+			"main.js"
 		],
 		"run_at": "document_end"
 	}]

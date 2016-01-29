@@ -1,0 +1,64 @@
+#focus-reading-pad {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 999999;
+	overflow: auto;
+	font: 14px/2 arial, "Microsoft Yahei", sans-seirf;
+	color: #333;
+	background: #fff;
+
+	/* for dajia.qq.com: overflow <p> style */
+	p {
+		font: 14px/2 arial, "Microsoft Yahei", sans-seirf;
+	}
+
+	.button-close {
+		position: fixed;
+		top: 0;
+		right: 17px;
+		line-height: 30px;
+		font-size: 24px;
+		width: 30px;
+		text-align: center;
+		cursor: pointer;
+		text-decoration: none;
+		color: #ccc;
+		background: #fff;
+
+		&:hover,
+		&:active {
+			color: #666 !important;
+			background: #f0f0f0;
+		}
+	}
+}
+
+#focus-reading-pad-content {
+	margin: 50px auto;
+	width: 500px;
+
+	h1 {
+		font-size: 24px;
+		line-height: 2;
+		font-weight: normal;
+		text-align: center;
+		border-top: 1px dashed #ccc;
+		border-bottom: 1px dashed #ccc;
+		padding: 1em;
+		margin-bottom: 1em;
+		color: #888;
+	}
+
+	p + p {
+		margin-top: 10px;
+	}
+
+	img {
+		margin-top: 10px;
+		margin-bottom: 10px;
+		max-width: 100%;
+	}
+}

@@ -1,0 +1,120 @@
+html.focus-reading,
+body.focus-reading {
+  overflow: hidden;
+}
+#focus-reading-button {
+  position: fixed;
+  top: 60px;
+  right: 10px;
+  padding: 10px;
+  z-index: 999998;
+}
+#focus-reading-pad {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999999;
+  overflow: auto;
+  font: 14px/2 arial, "Microsoft Yahei", sans-seirf;
+  color: #333;
+  background: #fff;
+  /* for dajia.qq.com: overflow <p> style */
+}
+#focus-reading-pad p {
+  font: 14px/2 arial, "Microsoft Yahei", sans-seirf;
+}
+#focus-reading-pad .button-close {
+  position: fixed;
+  top: 0;
+  right: 17px;
+  line-height: 30px;
+  font-size: 24px;
+  width: 30px;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  color: #ccc;
+  background: #fff;
+}
+#focus-reading-pad .button-close:hover,
+#focus-reading-pad .button-close:active {
+  color: #666 !important;
+  background: #f0f0f0;
+}
+#focus-reading-pad-content {
+  margin: 50px auto;
+  width: 500px;
+}
+#focus-reading-pad-content h1 {
+  font-size: 24px;
+  line-height: 2;
+  font-weight: normal;
+  text-align: center;
+  border-top: 1px dashed #ccc;
+  border-bottom: 1px dashed #ccc;
+  padding: 1em;
+  margin-bottom: 1em;
+  color: #888;
+}
+#focus-reading-pad-content p + p {
+  margin-top: 10px;
+}
+#focus-reading-pad-content img {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  max-width: 100%;
+}
+a:link > .focus-reading-tip-for-link {
+  display: none !important;
+  position: absolute;
+  width: 55px;
+  margin: 0 0 0 -55px;
+  padding: 0;
+  text-align: center;
+  color: #fff;
+  background: #999;
+  border-radius: 5px;
+  cursor: pointer;
+  font: normal 12px/20px arial, "Microsoft Yahei", sans-seirf;
+}
+a:hover > .focus-reading-tip-for-link {
+  display: inline-block !important;
+}
+#focus-reading-pad section.baidu-tieba-post {
+  padding: 1em 0;
+  border-bottom: 1px dotted #ccc;
+}
+#focus-reading-pad .baidu-tieba-replys {
+  margin-left: 20px;
+}
+#focus-reading-pad .baidu-tieba-replys li:before {
+  content: '';
+  position: absolute;
+  margin-left: -20px;
+  margin-top: 8px;
+  height: 10px;
+  width: 10px;
+  background: #ccc;
+}
+#focus-reading-pad .baidu-tieba-replys li:last-child {
+  margin-bottom: 0;
+}
+#focus-reading-pad .zhihu-user {
+  margin-bottom: 10px;
+}
+#focus-reading-pad .zhihu-user:before {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: #333;
+  margin-right: 10px;
+}
+#focus-reading-pad .zhihu-user .avatar-link {
+  float: right;
+}
+#focus-reading-pad .zhihu-user .avatar-link img {
+  margin: 0;
+}
