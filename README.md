@@ -1,10 +1,10 @@
-![Focus Reading](icon.png)
+![Focus Reading](extension/images/icon.png)
 
-# ½éÉÜ
+# ä»‹ç»
 
-Focus Reading£¨×¨×¢ÔÄ¶Á£©£¬Ò»¿î Chrome ²å¼þ£¬°ïÖúÄãÔÚÍøÕ¾×¨×¢ä¯ÀÀÎÄÕÂ£¬ÅÅ³ý¸ÉÈÅ¡£
+Focus Readingï¼ˆä¸“æ³¨é˜…è¯»ï¼‰ï¼Œä¸€æ¬¾ Chrome æ’ä»¶ï¼Œå¸®åŠ©ä½ åœ¨ç½‘ç«™ä¸“æ³¨æµè§ˆæ–‡ç« ï¼ŒæŽ’é™¤å¹²æ‰°ã€‚
 
-# Ö§³ÖÕ¾µã
+# æ”¯æŒç«™ç‚¹
 
 - http://www.gamersky.com/*
 - http://movie.douban.com/*
@@ -13,32 +13,28 @@ Focus Reading£¨×¨×¢ÔÄ¶Á£©£¬Ò»¿î Chrome ²å¼þ£¬°ïÖúÄãÔÚÍøÕ¾×¨×¢ä¯ÀÀÎÄÕÂ£¬ÅÅ³ý¸ÉÈÅ¡
 - http://tieba.baidu.com/p/*
 - http://www.zhihu.com/
 
-¸ü¶àÖ§³ÖÕ¾µãÇë²é¿´ manifest.json ÎÄ¼þÖÐµÄÅäÖÃ
+æ›´å¤šæ”¯æŒç«™ç‚¹è¯·æŸ¥çœ‹ manifest.json æ–‡ä»¶ä¸­çš„é…ç½®
 
-# ÈçºÎÊ¹ÓÃ£¿
+# å¦‚ä½•ä½¿ç”¨ï¼Ÿ
 
-1. Ê×ÏÈ£¬ÄãµÃÓÐ Chrome ä¯ÀÀÆ÷
-2. È»ºó£¬ÔÚä¯ÀÀÆ÷µØÖ·À¸ÊäÈëÒÔÏÂÄÚÈÝ²¢»Ø³µ£º
+1. é¦–å…ˆï¼Œä½ å¾—æœ‰ Chrome æµè§ˆå™¨
+2. ç„¶åŽï¼Œåœ¨æµè§ˆå™¨åœ°å€æ è¾“å…¥ä»¥ä¸‹å†…å®¹å¹¶å›žè½¦ï¼š
 
     ```
     chrome://extensions/
     ```
 
-3. ¶ÔÓÚÖÐÎÄ°æ Chrome£¬ÇëÖ´ÐÐÒÔÏÂ²½Öè¼ÓÔØ±¾²å¼þ£º
+3. å°† ```extension.crx``` æ‹–æ”¾åˆ°é¡µé¢
 
-    - ¹´Ñ¡¡°¿ª·¢ÕßÄ£Ê½¡±
-    - µã»÷¡°¼ÓÔØÒÑ½âÑ¹µÄÀ©Õ¹³ÌÐò...¡±°´Å¥
-    - µ¼º½µ½±¾²å¼þËùÔÚÄ¿Â¼£¬Ñ¡Ôñ²¢¡°È·¶¨¡±
+4. åŠ è½½æˆåŠŸï¼Œå¯ä»¥çœ‹åˆ° Focus Reading æ˜¾ç¤ºåœ¨é¡µé¢ä¸­
 
-4. ¼ÓÔØ³É¹¦£¬¿ÉÒÔ¿´µ½ Focus Reading ÏÔÊ¾ÔÚÒ³ÃæÖÐ
+    ![Chrome æ‰©å±•](extension/images/extension.png)
 
-    ![Chrome À©Õ¹](images/extension.png)
+5. æ¥åˆ°æœ¬æ’ä»¶æ”¯æŒçš„ç«™ç‚¹ï¼Œæ‰“å¼€ä¸€ç¯‡æ–‡ç« ï¼Œæ­¤æ—¶å¯ä»¥çœ‹åˆ°é¡µé¢å³ä¸Šè§’æ˜¾ç¤ºâ€œFRâ€æŒ‰é’®
+6. ç‚¹å‡»è¯¥æŒ‰é’®ï¼Œè¿›å…¥ä¸“æ³¨é˜…è¯»æ¨¡å¼
 
-5. À´µ½±¾²å¼þÖ§³ÖµÄÕ¾µã£¬´ò¿ªÒ»ÆªÎÄÕÂ£¬´ËÊ±¿ÉÒÔ¿´µ½Ò³ÃæÓÒÉÏ½ÇÏÔÊ¾¡°FR¡±°´Å¥
-6. µã»÷¸Ã°´Å¥£¬½øÈë×¨×¢ÔÄ¶ÁÄ£Ê½
+    ![ä¸“æ³¨é˜…è¯»æ¨¡å¼](extension/images/focus.png)
 
-    ![×¨×¢ÔÄ¶ÁÄ£Ê½](images/focus.png)
+# å…¶ä»–
 
-# ÆäËû
-
-- v0.1.4 Æð£¬Ö§³Ö url ÖÐ¸½¼Ó²éÑ¯²ÎÊý focus-reading=true ºó×Ô¶¯½øÈë×¨×¢ÔÄ¶ÁÄ£Ê½£»Ö§³ÖÔÚÒ³ÃæÁ´½ÓÖÐÌí¼Ó¡°×¨×¢ÔÄ¶Á¡±±ê¼Ç£¬½ø¶ø´ò¿ªÐÂÒ³ÃæºóÖ±½Ó½øÈë×¨×¢ÔÄ¶ÁÄ£Ê½¡£
+- v0.1.4 èµ·ï¼Œæ”¯æŒ url ä¸­é™„åŠ æŸ¥è¯¢å‚æ•° focus-reading=true åŽè‡ªåŠ¨è¿›å…¥ä¸“æ³¨é˜…è¯»æ¨¡å¼ï¼›æ”¯æŒåœ¨é¡µé¢é“¾æŽ¥ä¸­æ·»åŠ â€œä¸“æ³¨é˜…è¯»â€æ ‡è®°ï¼Œè¿›è€Œæ‰“å¼€æ–°é¡µé¢åŽç›´æŽ¥è¿›å…¥ä¸“æ³¨é˜…è¯»æ¨¡å¼ã€‚
