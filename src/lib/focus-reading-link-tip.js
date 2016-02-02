@@ -6,6 +6,7 @@
 var $ = require('jquery')
 
 var FocusReadingLinkTip = {}
+var urlHandlers = $.Callbacks()
 
 FocusReadingLinkTip.init = function () {
 	var lazyTimer = null
@@ -43,6 +44,30 @@ FocusReadingLinkTip.init = function () {
 		}
 		e.preventDefault()
 	})
+
+	/*
+	 * 处理 URL 链接地址
+	 */
+
+	urlHandlers.add(function (urlParts) {
+		if (urlParts.search) {
+			urlParts.search += '&focus-reading=true'
+		} else {
+			urlParts.search = '?focus-reading=true'
+		}
+	})
+
+	if (location.hostname === 'www.guancha.cn') {
+		urlHandlers.add(function (urlParts) {
+			// 观察者网的文章页面，貌似地址后面加个 "_s" 就是全文阅读版本的页面
+			// 所以，为了方便，都加下吧
+			// url 文件名示例：2016_02_02_350043.shtml
+			// 更改后应该是：2016_02_02_350043_s.shtml
+			var oldPath = urlParts.path
+			var dotIndex = oldPath.lastIndexOf('.')
+			urlParts.path = oldPath.substr(0, dotIndex) + '_s' + oldPath.substr(dotIndex)
+		})
+	}
 }
 
 FocusReadingLinkTip.start = function () {
@@ -62,6 +87,12 @@ FocusReadingLinkTip._makeFocusReadingTip = function (url) {
 }
 
 FocusReadingLinkTip._addFocusReadingTagToUrl = function (url) {
+	var parts = parseUrl(url)
+	urlHandlers.fire(parts)
+	return parts.path + parts.search + parts.hash
+}
+
+function parseUrl(url) {
 	var rest = url
 	var search
 	var hash
@@ -81,8 +112,12 @@ FocusReadingLinkTip._addFocusReadingTagToUrl = function (url) {
 	} else {
 		search = ''
 	}
-
-	return rest + (search.length > 0 ? search + '&focus-reading=true' : '?focus-reading=true') + hash
+	return {
+		original: url,
+		path: rest,
+		search: search,
+		hash: hash
+	}
 }
 
 module.exports = FocusReadingLinkTip
