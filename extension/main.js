@@ -9991,6 +9991,7 @@ exports.registerAll = function () {
 		.add('tech.163.com', 'h1', '#endText')
 		.add('udpwork.com', '#rss_item h2:first', '#rss_item .content')
 		.add('36kr.com', 'h1', '.article')
+		.add('blog.163.com', 'h3.title', '.nbw-blog')
 		.add(BaiduTiebaArticleGenerator)
 		.add(ZhihuArticleGenerator)
 }
@@ -10168,7 +10169,7 @@ FocusReadingLinkTip.init = function () {
 		}
 	})
 
-	if (location.host === 'www.guancha.cn') {
+	if (location.hostname === 'www.guancha.cn') {
 		urlHandlers.add(function (urlParts) {
 			// 观察者网的文章页面，貌似地址后面加个 "_s" 就是全文阅读版本的页面
 			// 所以，为了方便，都加下吧

@@ -19,6 +19,7 @@ exports.registerAll = function () {
 		.add('tech.163.com', 'h1', '#endText')
 		.add('udpwork.com', '#rss_item h2:first', '#rss_item .content')
 		.add('36kr.com', 'h1', '.article')
+		.add('blog.163.com', 'h3.title', '.nbw-blog')
 		.add(BaiduTiebaArticleGenerator)
 		.add(ZhihuArticleGenerator)
 }

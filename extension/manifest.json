@@ -25,7 +25,8 @@
 			"https://www.zhihu.com/*",
 			"http://tech.163.com/*",
 			"http://www.udpwork.com/*",
-			"http://36kr.com/*"
+			"http://36kr.com/*",
+			"http://blog.163.com/*"
 		],
 		"css": [
 			"main.css"

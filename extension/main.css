@@ -20,6 +20,7 @@ body.focus-reading {
   font: 14px/2 arial, "Microsoft Yahei", sans-seirf;
   color: #333;
   background: #fff;
+  text-align: left;
   /* for dajia.qq.com: overflow <p> style */
 }
 #focus-reading-pad p {
