@@ -16,6 +16,7 @@ body.focus-reading {
   width: 100%;
   height: 100%;
   z-index: 999999;
+  /* reset */
   overflow: auto;
   font: 14px/2 arial, "Microsoft Yahei", sans-seirf;
   color: #333;

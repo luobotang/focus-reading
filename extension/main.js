@@ -10009,7 +10009,7 @@ ZhihuArticleGenerator.name = 'zhihu.com'
 
 ZhihuArticleGenerator.title = function () {
 	if (location.pathname.startsWith('/question')) {
-		return $('.zm-item-title').text()
+		return $('#zh-question-title a').text()
 	} else {
 		var $item = ZhihuArticleGenerator.getReadingItemOnIndexPage()
 		if ($item) {
