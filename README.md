@@ -15,7 +15,7 @@ Focus Reading（专注阅读），一款 Chrome 插件，帮助你在网站专�
 - http://tieba.baidu.com/p/*
 - http://www.zhihu.com/
 
-更多支持站点请查看 extension/manifest.json 文件中的配置
+更多支持站点请查看源码：```src/lib/article-generators/index.js```
 
 ## 如何使用？
 
@@ -32,13 +32,15 @@ Focus Reading（专注阅读），一款 Chrome 插件，帮助你在网站专�
 
     ![Chrome 扩展](images/extension.png)
 
-5. 来到本插件支持的站点，打开一篇文章，此时可以看到页面右上角显示“FR”按钮
-6. 点击该按钮，进入专注阅读模式
+5. 来到本插件支持的站点，打开一篇文章，点击地址栏中的 Focus Reading 插件图标，进入专注阅读模式
 
     ![专注阅读模式](images/focus.png)
 
 ## 更新记录
 
+- v0.3.0
+    - 替换原有的页面 FR 按钮，改为使用地址栏插件图标进入专注阅读模式
+    - 插件改为缺省在所有页面运行，不再于插件配置文件 manifest.json 中进行限制，而是交由程序判断能否在当前页面获取可阅读的内容
 - v0.2.0
     - 重构
 - v0.1.4
