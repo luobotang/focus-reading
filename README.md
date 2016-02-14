@@ -1,6 +1,6 @@
 # Focus Reading
 
-![Focus Reading](extension/images/icon.png)
+![Focus Reading](images/icon.png)
 
 ## 介绍
 
@@ -30,12 +30,12 @@ Focus Reading（专注阅读），一款 Chrome 插件，帮助你在网站专�
 
 4. 加载成功，可以看到 Focus Reading 显示在页面中
 
-    ![Chrome 扩展](extension/images/extension.png)
+    ![Chrome 扩展](images/extension.png)
 
 5. 来到本插件支持的站点，打开一篇文章，此时可以看到页面右上角显示“FR”按钮
 6. 点击该按钮，进入专注阅读模式
 
-    ![专注阅读模式](extension/images/focus.png)
+    ![专注阅读模式](images/focus.png)
 
 ## 更新记录
 
