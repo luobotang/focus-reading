@@ -75,14 +75,17 @@ a:link > .focus-reading-tip-for-link {
   margin: 0 0 0 -55px;
   padding: 0;
   text-align: center;
-  color: #fff;
-  background: #999;
+  color: #fff !important;
+  background: rgba(200, 200, 200, 0.5) !important;
   border-radius: 5px;
   cursor: pointer;
   font: normal 12px/20px arial, "Microsoft Yahei", sans-seirf;
 }
 a:hover > .focus-reading-tip-for-link {
   display: inline-block !important;
+}
+a:hover > .focus-reading-tip-for-link:hover {
+  background: #999 !important;
 }
 #focus-reading-pad section.baidu-tieba-post {
   padding: 1em 0;
