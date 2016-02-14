@@ -1,8 +1,8 @@
 {
   "name": "focus-reading",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Focus on Reading chrome extension",
-  "main": "src/read.js",
+  "main": "src/content.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/luobotang/focus-reading.git"
