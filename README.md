@@ -19,7 +19,7 @@ Focus Reading（专注阅读），一款 Chrome 插件，帮助你在网站专�
 
 ## 如何下载？
 
-- 直接在 Github 主要下载源码包：[focus-reading.zip](./archive/master.zip)
+- 直接在 Github 主要下载源码包：[focus-reading.zip](https://github.com/luobotang/focus-reading/archive/master.zip)
 - 通过 npm 下载最新版本：```npm install focus-reading```
 
 ## 如何使用？
