@@ -2,15 +2,19 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 		browserify: {
-			build: {
-				src: 'src/main.js',
-				dest: 'extension/main.js'
+			content: {
+				src: 'src/content.js',
+				dest: 'extension/content.js'
+			},
+			background: {
+				src: 'src/background.js',
+				dest: 'extension/background.js'
 			}
 		},
 		less: {
-			build: {
-				src: 'src/main.less',
-				dest: 'extension/main.css'
+			content: {
+				src: 'src/content.less',
+				dest: 'extension/content.css'
 			}
 		}
 	})
@@ -18,5 +22,5 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-browserify')
 	grunt.loadNpmTasks('grunt-contrib-less')
 
-	grunt.registerTask('default', ['browserify:build', 'less:build'])
+	grunt.registerTask('default', ['browserify', 'less'])
 }

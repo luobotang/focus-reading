@@ -1,39 +1,23 @@
 {
 	"name": "Focus Reading",
-	"version": "0.2.1",
+	"version": "0.3",
 	"description": "Focus on Reading",
 	"icons": {
 		"128": "images/icon.png"
 	},
-	"manifest_version": 2,
+	"background": {
+		"scripts": ["background.js"]
+	},
 	"content_scripts": [{
-		"matches": [
-			"http://www.gamersky.com/*",
-			"http://movie.douban.com/*",
-			"https://movie.douban.com/*",
-			"http://www.jianshu.com/p/*",
-			"http://baike.baidu.com/*",
-			"http://tieba.baidu.com/p/*",
-			"http://www.guancha.cn/*",
-			"http://www.tuicool.com/*",
-			"http://www.chinanews.com/*",
-			"http://news.xinhuanet.com/*",
-			"http://www.21ccom.net/*",
-			"http://www.chinavalue.net/*",
-			"http://dajia.qq.com/*",
-			"http://news.163.com/*",
-			"https://www.zhihu.com/*",
-			"http://tech.163.com/*",
-			"http://www.udpwork.com/*",
-			"http://36kr.com/*",
-			"http://blog.163.com/*"
-		],
-		"css": [
-			"main.css"
-		],
-		"js": [
-			"main.js"
-		],
+		"matches": ["http://*/*", "https://*/*"],
+		"css": ["content.css"],
+		"js": ["content.js"],
 		"run_at": "document_end"
-	}]
+	}],
+	"permissions": ["tabs"],
+	"page_action": {
+		"default_icon": "images/icon.png",
+		"default_title": "Focus Reading"
+	},
+	"manifest_version": 2
 }
