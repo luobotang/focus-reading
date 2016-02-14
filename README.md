@@ -1,6 +1,6 @@
 # Focus Reading
 
-![Focus Reading](images/icon.png)
+![Focus Reading](extension/images/icon.png)
 
 ## 介绍
 
