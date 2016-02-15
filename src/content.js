@@ -56,7 +56,7 @@ function init() {
 function focusRead() {
 	var article = ArticleGeneratorManager.generatArticle()
 	if (article) {
-		FocusReadingPad.show(article.title, article.content)
+		FocusReadingPad.show(article.title, article.content, article.articleClass)
 		FocusReadingLinkTip.stop()
 	} else {
 		alert('Focus Reading: Can not find anything to read.')

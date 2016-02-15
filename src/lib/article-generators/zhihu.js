@@ -11,7 +11,7 @@ ZhihuArticleGenerator.name = 'zhihu.com'
 
 ZhihuArticleGenerator.title = function () {
 	if (location.pathname.startsWith('/question')) {
-		return $('#zh-question-title a').text()
+		return document.title.replace(' - 知乎', '')
 	} else {
 		var $item = ZhihuArticleGenerator.getReadingItemOnIndexPage()
 		if ($item) {

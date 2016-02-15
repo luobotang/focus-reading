@@ -9890,13 +9890,13 @@ function init() {
 function focusRead() {
 	var article = ArticleGeneratorManager.generatArticle()
 	if (article) {
-		FocusReadingPad.show(article.title, article.content)
+		FocusReadingPad.show(article.title, article.content, article.articleClass)
 		FocusReadingLinkTip.stop()
 	} else {
 		alert('Focus Reading: Can not find anything to read.')
 	}
 }
-},{"./lib/article-generator-manager":3,"./lib/article-generators/":5,"./lib/focus-reading-link-tip":7,"./lib/focus-reading-pad":8,"jquery":1}],3:[function(require,module,exports){
+},{"./lib/article-generator-manager":3,"./lib/article-generators/":6,"./lib/focus-reading-link-tip":8,"./lib/focus-reading-pad":9,"jquery":1}],3:[function(require,module,exports){
 /*
  * ArticleGeneratorManager
  * 管理网页“内容提供器”
@@ -9937,10 +9937,12 @@ ArticleGeneratorManager.generatArticle = function () {
 	var i = 0
 	while ((generator = this.generators[i++])) {
 		if (hostname.indexOf(generator.name) > -1) {
+			var articleClass = 'focus-reading-article-' + generator.name.replace(/\./g, '-')
 			var title = this.getText(generator.title)
 			var content = this.getHtml(generator.content)
 			if (title && content) {
 				return {
+					articleClass: articleClass,
 					title: title,
 					content: content
 				}
@@ -10035,6 +10037,12 @@ BaiduTiebaArticleGenerator.content = function () {
 
 module.exports = BaiduTiebaArticleGenerator
 },{"jquery":1}],5:[function(require,module,exports){
+module.exports = {
+	name: 'news.bitauto.com',
+	title: 'h1',
+	content: '.article-contents'
+}
+},{}],6:[function(require,module,exports){
 var ArticleGeneratorManager = require('../article-generator-manager')
 var BaiduTiebaArticleGenerator = require('./baidu-tieba.js')
 var ZhihuArticleGenerator = require('./zhihu.js')
@@ -10059,8 +10067,9 @@ exports.registerAll = function () {
 		.add('blog.163.com', 'h3.title', '.nbw-blog')
 		.add(BaiduTiebaArticleGenerator)
 		.add(ZhihuArticleGenerator)
+		.add(require('./bitauto'))
 }
-},{"../article-generator-manager":3,"./baidu-tieba.js":4,"./zhihu.js":6}],6:[function(require,module,exports){
+},{"../article-generator-manager":3,"./baidu-tieba.js":4,"./bitauto":5,"./zhihu.js":7}],7:[function(require,module,exports){
 /*
  * ZhihuArticleGenerator
  * 用于知乎网站的内容生成器
@@ -10074,7 +10083,7 @@ ZhihuArticleGenerator.name = 'zhihu.com'
 
 ZhihuArticleGenerator.title = function () {
 	if (location.pathname.startsWith('/question')) {
-		return $('#zh-question-title a').text()
+		return document.title.replace(' - 知乎', '')
 	} else {
 		var $item = ZhihuArticleGenerator.getReadingItemOnIndexPage()
 		if ($item) {
@@ -10174,7 +10183,7 @@ ZhihuArticleGenerator.isElementInReading = function (el) {
 }
 
 module.exports = ZhihuArticleGenerator
-},{"jquery":1}],7:[function(require,module,exports){
+},{"jquery":1}],8:[function(require,module,exports){
 /*
  * FocusReadingLinkTip
  * 跟踪鼠标在页面有效链接上的停留，显示“专注阅读”，以便在打开的页面中直接启用阅读模式
@@ -10245,6 +10254,22 @@ FocusReadingLinkTip.init = function () {
 			urlParts.path = oldPath.substr(0, dotIndex) + '_s' + oldPath.substr(dotIndex)
 		})
 	}
+
+	if (location.hostname.indexOf('bitauto.com') > 0) {
+		urlHandlers.add(function (urlParts) {
+			// 尽量显示全部内容
+			// @example
+			// http://news.bitauto.com/gcsc/20140618/1506456685.html
+			// http://news.bitauto.com/gcsc/20140618/1506456685_all.html
+			var oldPath = urlParts.path
+			// xxxx/00000000/0000-0.html
+			if (/\/[a-z]+\/\d{8}\/\d+(-\d)?\.html/i.test(oldPath)) {
+				urlParts.path = urlParts.path.replace(/\/(\d+)(-\d)?.html/, function (m, m1) {
+					return '/' + m1 + '_all' + '.html'
+				})
+			}
+		})
+	}
 }
 
 FocusReadingLinkTip.start = function () {
@@ -10298,7 +10323,7 @@ function parseUrl(url) {
 }
 
 module.exports = FocusReadingLinkTip
-},{"jquery":1}],8:[function(require,module,exports){
+},{"jquery":1}],9:[function(require,module,exports){
 /*
  * FocusReadingPad
  * 文章阅读面板
@@ -10322,11 +10347,15 @@ FocusReadingPad.TEMPLATE_PAD = (
 )
 FocusReadingPad.CLASS_READING_PAD_SHOWING = 'focus-reading'
 
-FocusReadingPad.show = function (title, content) {
+FocusReadingPad.show = function (title, content, articleClass) {
 	this.$readingPad.find('#focus-reading-pad-content').html(
 		'<h1>' + title + '</h1>' +
 		content
 	)
+
+	if (articleClass) {
+		this.$readingPad.addClass(articleClass)
+	}
 
 	$('html,body').addClass(this.CLASS_READING_PAD_SHOWING)
 	$(document).on('keydown', this._hideOnEscKeydown)
@@ -10353,4 +10382,4 @@ FocusReadingPad._hideOnEscKeydown = function (e) {
 }
 
 module.exports = FocusReadingPad
-},{"./focus-reading-link-tip":7,"jquery":1}]},{},[2]);
+},{"./focus-reading-link-tip":8,"jquery":1}]},{},[2]);

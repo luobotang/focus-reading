@@ -68,6 +68,22 @@ FocusReadingLinkTip.init = function () {
 			urlParts.path = oldPath.substr(0, dotIndex) + '_s' + oldPath.substr(dotIndex)
 		})
 	}
+
+	if (location.hostname.indexOf('bitauto.com') > 0) {
+		urlHandlers.add(function (urlParts) {
+			// 尽量显示全部内容
+			// @example
+			// http://news.bitauto.com/gcsc/20140618/1506456685.html
+			// http://news.bitauto.com/gcsc/20140618/1506456685_all.html
+			var oldPath = urlParts.path
+			// xxxx/00000000/0000-0.html
+			if (/\/[a-z]+\/\d{8}\/\d+(-\d)?\.html/i.test(oldPath)) {
+				urlParts.path = urlParts.path.replace(/\/(\d+)(-\d)?.html/, function (m, m1) {
+					return '/' + m1 + '_all' + '.html'
+				})
+			}
+		})
+	}
 }
 
 FocusReadingLinkTip.start = function () {

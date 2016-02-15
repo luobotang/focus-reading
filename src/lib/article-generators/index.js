@@ -22,4 +22,5 @@ exports.registerAll = function () {
 		.add('blog.163.com', 'h3.title', '.nbw-blog')
 		.add(BaiduTiebaArticleGenerator)
 		.add(ZhihuArticleGenerator)
+		.add(require('./bitauto'))
 }

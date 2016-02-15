@@ -38,10 +38,12 @@ ArticleGeneratorManager.generatArticle = function () {
 	var i = 0
 	while ((generator = this.generators[i++])) {
 		if (hostname.indexOf(generator.name) > -1) {
+			var articleClass = 'focus-reading-article-' + generator.name.replace(/\./g, '-')
 			var title = this.getText(generator.title)
 			var content = this.getHtml(generator.content)
 			if (title && content) {
 				return {
+					articleClass: articleClass,
 					title: title,
 					content: content
 				}

@@ -64,12 +64,15 @@ body.focus-reading {
 a:link > .focus-reading-tip-for-link {
   display: none !important;
   position: absolute;
-  width: 55px;
-  margin: 0 0 0 -55px;
-  padding: 0;
+  width: 55px !important;
+  height: auto !important;
+  margin: 0 0 0 -55px !important;
+  padding: 0 !important;
   text-align: center;
+  text-indent: 0 !important;
   color: #fff !important;
   background: rgba(200, 200, 200, 0.5) !important;
+  border: 0 none !important;
   border-radius: 5px;
   cursor: pointer;
   font: normal 12px/20px arial, "Microsoft Yahei", sans-seirf;
@@ -115,4 +118,22 @@ a:hover > .focus-reading-tip-for-link:hover {
 }
 #focus-reading-pad .zhihu-user .avatar-link img {
   margin: 0;
+}
+body.focus-reading .yiche-side {
+  display: none;
+}
+.focus-reading-article-news-bitauto-com table.table_news,
+.focus-reading-article-news-bitauto-com table.table_pics {
+  width: 100%;
+  border: 1px solid #e5e5e5;
+}
+.focus-reading-article-news-bitauto-com table.table_news tr,
+.focus-reading-article-news-bitauto-com table.table_pics tr {
+  border-bottom: 1px solid #e5e5e5;
+}
+.focus-reading-article-news-bitauto-com table.table_news th,
+.focus-reading-article-news-bitauto-com table.table_pics th,
+.focus-reading-article-news-bitauto-com table.table_news td,
+.focus-reading-article-news-bitauto-com table.table_pics td {
+  padding: 0 5px;
 }

@@ -21,11 +21,15 @@ FocusReadingPad.TEMPLATE_PAD = (
 )
 FocusReadingPad.CLASS_READING_PAD_SHOWING = 'focus-reading'
 
-FocusReadingPad.show = function (title, content) {
+FocusReadingPad.show = function (title, content, articleClass) {
 	this.$readingPad.find('#focus-reading-pad-content').html(
 		'<h1>' + title + '</h1>' +
 		content
 	)
+
+	if (articleClass) {
+		this.$readingPad.addClass(articleClass)
+	}
 
 	$('html,body').addClass(this.CLASS_READING_PAD_SHOWING)
 	$(document).on('keydown', this._hideOnEscKeydown)
