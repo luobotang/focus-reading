@@ -48,7 +48,6 @@ function init() {
 	 * 通过点击 page_action 图标进入专注阅读模式
 	 */
 	chrome.extension.onRequest.addListener(function (request, sender, sendResponse) {
-		console.log('get request ' + new Date)
 		focusRead()
 	})
 }
