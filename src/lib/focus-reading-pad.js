@@ -45,6 +45,8 @@ FocusReadingPad.hide = function () {
 
 	this.$readingPad.fadeOut(function () {
 		$('html,body').removeClass(this.CLASS_READING_PAD_SHOWING)
+		// 清空，避免再次查看时从面板中获取内容
+		FocusReadingPad.$readingPad.find('#focus-reading-pad-content').empty()
 		FocusReadingLinkTip.start()
 	}.bind(this))
 }

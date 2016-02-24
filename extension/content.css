@@ -137,3 +137,6 @@ body.focus-reading .yiche-side {
 .focus-reading-article-news-bitauto-com table.table_pics td {
   padding: 0 5px;
 }
+.focus-reading-article-news-ifeng-com .ifengLogo img {
+  margin: 0 !important;
+}

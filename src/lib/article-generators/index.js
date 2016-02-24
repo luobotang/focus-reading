@@ -24,4 +24,5 @@ exports.registerAll = function () {
 		.add(require('./haodf'))
 		.add('news.ifeng.com', 'h1', '.AtxtType01')
 		.add(require('./ent-qq'))
+		.add(require('./huxiu'))
 }
