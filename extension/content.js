@@ -9896,7 +9896,7 @@ function focusRead() {
 		alert('Focus Reading: Can not find anything to read.')
 	}
 }
-},{"./lib/article-generator-manager":3,"./lib/article-generators/":6,"./lib/focus-reading-link-tip":8,"./lib/focus-reading-pad":9,"jquery":1}],3:[function(require,module,exports){
+},{"./lib/article-generator-manager":3,"./lib/article-generators/":7,"./lib/focus-reading-link-tip":9,"./lib/focus-reading-pad":10,"jquery":1}],3:[function(require,module,exports){
 /*
  * ArticleGeneratorManager
  * 管理网页“内容提供器”
@@ -9968,24 +9968,22 @@ ArticleGeneratorManager.getText = function (s) {
 
 ArticleGeneratorManager.getHtml = function (s) {
 	if (typeof s === 'string') {
-		return this.tryRemoveStyleInfo($(s).clone())
+		return this.tryRemoveStyleInfo($(s).html())
 	} else if (typeof s === 'function') {
-		return s()
+		return this.tryRemoveStyleInfo(s())
 	} else {
 		return null
 	}
 }
 
-ArticleGeneratorManager.tryRemoveStyleInfo = function (el, deep) {
-	var $el = $(el).attr('style', '')
-
-	$el.children().each(function (i, el) {
-		ArticleGeneratorManager.tryRemoveStyleInfo(el, true)
-	})
-
-	if (!deep) {
-		return $el.html()
-	}
+ArticleGeneratorManager.tryRemoveStyleInfo = function (html) {
+	var reStyleAttr = /(<[^>]+)(style="[^"]+"|style='[^']+')([^>]*>)/g
+	return (
+		html
+		.replace(reStyleAttr, function (m, prev, styleAttr, after) {
+			return prev + after
+		})
+	)
 }
 
 module.exports = ArticleGeneratorManager
@@ -10043,9 +10041,24 @@ module.exports = {
 	content: '.article-contents'
 }
 },{}],6:[function(require,module,exports){
+var $ = require('jquery')
+
+exports.name = 'haodf.com'
+
+exports.title = 'h1'
+
+exports.content = function () {
+	var $el = $('.article_detail .article_detail')
+	if ($el.length === 1) {
+		return $el.html()
+	} else if ($el.length === 0) {
+		return $('.article_detail').html()
+	} else {
+		// do nothing
+	}
+}
+},{"jquery":1}],7:[function(require,module,exports){
 var ArticleGeneratorManager = require('../article-generator-manager')
-var BaiduTiebaArticleGenerator = require('./baidu-tieba.js')
-var ZhihuArticleGenerator = require('./zhihu.js')
 
 exports.registerAll = function () {
 	ArticleGeneratorManager
@@ -10065,11 +10078,12 @@ exports.registerAll = function () {
 		.add('udpwork.com', '#rss_item h2:first', '#rss_item .content')
 		.add('36kr.com', 'h1', '.article')
 		.add('blog.163.com', 'h3.title', '.nbw-blog')
-		.add(BaiduTiebaArticleGenerator)
-		.add(ZhihuArticleGenerator)
+		.add(require('./baidu-tieba.js'))
+		.add(require('./zhihu.js'))
 		.add(require('./bitauto'))
+		.add(require('./haodf'))
 }
-},{"../article-generator-manager":3,"./baidu-tieba.js":4,"./bitauto":5,"./zhihu.js":7}],7:[function(require,module,exports){
+},{"../article-generator-manager":3,"./baidu-tieba.js":4,"./bitauto":5,"./haodf":6,"./zhihu.js":8}],8:[function(require,module,exports){
 /*
  * ZhihuArticleGenerator
  * 用于知乎网站的内容生成器
@@ -10183,7 +10197,7 @@ ZhihuArticleGenerator.isElementInReading = function (el) {
 }
 
 module.exports = ZhihuArticleGenerator
-},{"jquery":1}],8:[function(require,module,exports){
+},{"jquery":1}],9:[function(require,module,exports){
 /*
  * FocusReadingLinkTip
  * 跟踪鼠标在页面有效链接上的停留，显示“专注阅读”，以便在打开的页面中直接启用阅读模式
@@ -10323,7 +10337,7 @@ function parseUrl(url) {
 }
 
 module.exports = FocusReadingLinkTip
-},{"jquery":1}],9:[function(require,module,exports){
+},{"jquery":1}],10:[function(require,module,exports){
 /*
  * FocusReadingPad
  * 文章阅读面板
@@ -10382,4 +10396,4 @@ FocusReadingPad._hideOnEscKeydown = function (e) {
 }
 
 module.exports = FocusReadingPad
-},{"./focus-reading-link-tip":8,"jquery":1}]},{},[2]);
+},{"./focus-reading-link-tip":9,"jquery":1}]},{},[2]);

@@ -1,6 +1,4 @@
 var ArticleGeneratorManager = require('../article-generator-manager')
-var BaiduTiebaArticleGenerator = require('./baidu-tieba.js')
-var ZhihuArticleGenerator = require('./zhihu.js')
 
 exports.registerAll = function () {
 	ArticleGeneratorManager
@@ -20,7 +18,8 @@ exports.registerAll = function () {
 		.add('udpwork.com', '#rss_item h2:first', '#rss_item .content')
 		.add('36kr.com', 'h1', '.article')
 		.add('blog.163.com', 'h3.title', '.nbw-blog')
-		.add(BaiduTiebaArticleGenerator)
-		.add(ZhihuArticleGenerator)
+		.add(require('./baidu-tieba.js'))
+		.add(require('./zhihu.js'))
 		.add(require('./bitauto'))
+		.add(require('./haodf'))
 }

@@ -69,24 +69,22 @@ ArticleGeneratorManager.getText = function (s) {
 
 ArticleGeneratorManager.getHtml = function (s) {
 	if (typeof s === 'string') {
-		return this.tryRemoveStyleInfo($(s).clone())
+		return this.tryRemoveStyleInfo($(s).html())
 	} else if (typeof s === 'function') {
-		return s()
+		return this.tryRemoveStyleInfo(s())
 	} else {
 		return null
 	}
 }
 
-ArticleGeneratorManager.tryRemoveStyleInfo = function (el, deep) {
-	var $el = $(el).attr('style', '')
-
-	$el.children().each(function (i, el) {
-		ArticleGeneratorManager.tryRemoveStyleInfo(el, true)
-	})
-
-	if (!deep) {
-		return $el.html()
-	}
+ArticleGeneratorManager.tryRemoveStyleInfo = function (html) {
+	var reStyleAttr = /(<[^>]+)(style="[^"]+"|style='[^']+')([^>]*>)/g
+	return (
+		html
+		.replace(reStyleAttr, function (m, prev, styleAttr, after) {
+			return prev + after
+		})
+	)
 }
 
 module.exports = ArticleGeneratorManager
