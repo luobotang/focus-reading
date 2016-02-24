@@ -10082,6 +10082,7 @@ exports.registerAll = function () {
 		.add(require('./zhihu.js'))
 		.add(require('./bitauto'))
 		.add(require('./haodf'))
+		.add('news.ifeng.com', 'h1', '.AtxtType01')
 }
 },{"../article-generator-manager":3,"./baidu-tieba.js":4,"./bitauto":5,"./haodf":6,"./zhihu.js":8}],8:[function(require,module,exports){
 /*

@@ -22,4 +22,5 @@ exports.registerAll = function () {
 		.add(require('./zhihu.js'))
 		.add(require('./bitauto'))
 		.add(require('./haodf'))
+		.add('news.ifeng.com', 'h1', '.AtxtType01')
 }
