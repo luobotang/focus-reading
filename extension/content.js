@@ -10102,7 +10102,7 @@ exports.registerAll = function () {
 		.add('news.ifeng.com', 'h1', '.AtxtType01')
 		.add(require('./ent-qq'))
 		.add(require('./huxiu'))
-		.add('news.cri.cn', 'h1', '#abody')
+		.add('cri.cn', 'h1', '#abody')
 }
 },{"../article-generator-manager":3,"./baidu-tieba.js":4,"./bitauto":5,"./ent-qq":6,"./haodf":7,"./huxiu":8,"./zhihu.js":10}],10:[function(require,module,exports){
 /*

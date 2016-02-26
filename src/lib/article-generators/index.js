@@ -25,5 +25,5 @@ exports.registerAll = function () {
 		.add('news.ifeng.com', 'h1', '.AtxtType01')
 		.add(require('./ent-qq'))
 		.add(require('./huxiu'))
-		.add('news.cri.cn', 'h1', '#abody')
+		.add('cri.cn', 'h1', '#abody')
 }
