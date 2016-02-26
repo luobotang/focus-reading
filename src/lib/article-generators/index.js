@@ -26,4 +26,5 @@ exports.registerAll = function () {
 		.add(require('./ent-qq'))
 		.add(require('./huxiu'))
 		.add('cri.cn', 'h1', '#abody')
+		.add(require('./tianya'))
 }

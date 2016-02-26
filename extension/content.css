@@ -140,3 +140,8 @@ body.focus-reading .yiche-side {
 .focus-reading-article-news-ifeng-com .ifengLogo img {
   margin: 0 !important;
 }
+.focus-reading-article-bbs-tianya-cn section {
+  margin: 5px 0;
+  padding: 10px;
+  border: 1px solid #e5e5e5;
+}
