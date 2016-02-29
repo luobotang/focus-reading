@@ -35,6 +35,14 @@ function init() {
 	FocusReadingPad.init()
 	FocusReadingLinkTip.init()
 
+	FocusReadingPad.on('hide', function () {
+		FocusReadingLinkTip.start()
+	})
+
+	FocusReadingPad.on('show', function () {
+		FocusReadingLinkTip.stop()
+	})
+
 	/*
 	 * 自动进入专注阅读模式
 	 */
@@ -56,7 +64,6 @@ function focusRead() {
 	var article = ArticleGeneratorManager.generatArticle()
 	if (article) {
 		FocusReadingPad.show(article.title, article.content, article.articleClass)
-		FocusReadingLinkTip.stop()
 	} else {
 		alert('Focus Reading: Can not find anything to read.')
 	}

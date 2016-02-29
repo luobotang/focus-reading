@@ -42,7 +42,7 @@ body.focus-reading {
   margin: 50px auto;
   width: 500px;
 }
-#focus-reading-pad-content h1 {
+#focus-reading-pad-content .focus-reading-article-title {
   font-size: 24px;
   line-height: 2;
   font-weight: normal;
