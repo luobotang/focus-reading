@@ -10428,7 +10428,7 @@ FocusReadingPad.CLASS_READING_PAD_SHOWING = 'focus-reading'
 FocusReadingPad.show = function (title, content, articleClass) {
 	this.$readingPad.find('#focus-reading-pad-content').html(
 		'<div class="focus-reading-article-title">' + title + '</div>' +
-		content
+		'<div class="focus-reading-article-content">' + content + '</div>'
 	)
 
 	if (articleClass) {
