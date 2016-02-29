@@ -1,7 +1,8 @@
-var ArticleGeneratorManager = require('../article-generator-manager')
-
-exports.registerAll = function () {
-	ArticleGeneratorManager
+/*
+ * @param {ArticleGeneratorManager} articleGeneratorManager
+ */
+exports.registerAllTo = function (articleGeneratorManager) {
+	articleGeneratorManager
 		.add('gamersky.com', 'h1', '.Mid2L_con')
 		.add('movie.douban', 'h1', '#link-report')
 		.add('baike.baidu', 'h1', '.main-content')

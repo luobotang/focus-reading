@@ -9865,7 +9865,7 @@ function tryInit() {
 function init() {
 
 	ArticleGeneratorManager.init()
-	ArticleGenerators.registerAll()
+	ArticleGenerators.registerAllTo(ArticleGeneratorManager)
 	FocusReadingPad.init()
 	FocusReadingLinkTip.init()
 
@@ -10082,10 +10082,11 @@ exports.content = function () {
 	return $('.article-img-box').html() + $('#article_content').html()
 }
 },{"jquery":1}],9:[function(require,module,exports){
-var ArticleGeneratorManager = require('../article-generator-manager')
-
-exports.registerAll = function () {
-	ArticleGeneratorManager
+/*
+ * @param {ArticleGeneratorManager} articleGeneratorManager
+ */
+exports.registerAllTo = function (articleGeneratorManager) {
+	articleGeneratorManager
 		.add('gamersky.com', 'h1', '.Mid2L_con')
 		.add('movie.douban', 'h1', '#link-report')
 		.add('baike.baidu', 'h1', '.main-content')
@@ -10112,7 +10113,7 @@ exports.registerAll = function () {
 		.add('cri.cn', 'h1', '#abody')
 		.add(require('./tianya'))
 }
-},{"../article-generator-manager":3,"./baidu-tieba.js":4,"./bitauto":5,"./ent-qq":6,"./haodf":7,"./huxiu":8,"./tianya":10,"./zhihu.js":11}],10:[function(require,module,exports){
+},{"./baidu-tieba.js":4,"./bitauto":5,"./ent-qq":6,"./haodf":7,"./huxiu":8,"./tianya":10,"./zhihu.js":11}],10:[function(require,module,exports){
 var $ = require('jquery')
 
 exports.name = 'bbs.tianya.cn'

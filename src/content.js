@@ -31,7 +31,7 @@ function tryInit() {
 function init() {
 
 	ArticleGeneratorManager.init()
-	ArticleGenerators.registerAll()
+	ArticleGenerators.registerAllTo(ArticleGeneratorManager)
 	FocusReadingPad.init()
 	FocusReadingLinkTip.init()
 
