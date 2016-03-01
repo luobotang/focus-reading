@@ -10113,6 +10113,7 @@ exports.registerAllTo = function (articleGeneratorManager) {
 		.add('cri.cn', 'h1', '#abody')
 		.add(require('./tianya'))
 		.add('finance.qq.com', 'h1', '#articleContent')
+		.add('blog.csdn.net', 'h1', '#article_content')
 }
 },{"./baidu-tieba.js":4,"./bitauto":5,"./ent-qq":6,"./haodf":7,"./huxiu":8,"./tianya":10,"./zhihu.js":11}],10:[function(require,module,exports){
 var $ = require('jquery')
