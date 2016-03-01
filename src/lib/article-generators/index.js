@@ -28,4 +28,5 @@ exports.registerAllTo = function (articleGeneratorManager) {
 		.add(require('./huxiu'))
 		.add('cri.cn', 'h1', '#abody')
 		.add(require('./tianya'))
+		.add('finance.qq.com', 'h1', '#articleContent')
 }
