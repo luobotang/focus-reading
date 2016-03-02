@@ -32,4 +32,5 @@ exports.registerAllTo = function (articleGeneratorManager) {
 		.add('blog.csdn.net', 'h1', '#article_content')
 		.add('www.cnblogs.com', '.postTitle', '#cnblogs_post_body')
 		.add('blog.sina.com.cn', 'h2', '.articalContent')
+		.add('sports.sohu.com', 'h1', '#contentText')
 }
