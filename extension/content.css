@@ -2,6 +2,18 @@ html.focus-reading,
 body.focus-reading {
   overflow: hidden;
 }
+html.focus-reading ::-webkit-scrollbar,
+body.focus-reading ::-webkit-scrollbar {
+  width: 12px;
+}
+html.focus-reading ::-webkit-scrollbar-track,
+body.focus-reading ::-webkit-scrollbar-track {
+  border-left: 1px solid #e5e5e5;
+}
+html.focus-reading ::-webkit-scrollbar-thumb,
+body.focus-reading ::-webkit-scrollbar-thumb {
+  background: #ccc;
+}
 #focus-reading-pad {
   position: fixed;
   top: 0;
@@ -11,19 +23,20 @@ body.focus-reading {
   z-index: 999999;
   /* reset */
   overflow: auto;
-  font: 14px/2 arial, "Microsoft Yahei", sans-seirf;
+  font: 16px/1.7 arial, "Microsoft Yahei", sans-seirf;
   color: #333;
   background: #fff;
   text-align: left;
-  /* for dajia.qq.com: overflow <p> style */
+  /* overflow page style */
 }
 #focus-reading-pad p {
-  font: 14px/2 arial, "Microsoft Yahei", sans-seirf;
+  margin: 0;
+  font: 16px/1.7 arial, "Microsoft Yahei", sans-seirf;
 }
 #focus-reading-pad .button-close {
   position: fixed;
   top: 0;
-  right: 17px;
+  right: 12px;
   line-height: 30px;
   font-size: 24px;
   width: 30px;
@@ -31,30 +44,33 @@ body.focus-reading {
   cursor: pointer;
   text-decoration: none;
   color: #ccc;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.5);
 }
 #focus-reading-pad .button-close:hover,
 #focus-reading-pad .button-close:active {
-  color: #666 !important;
-  background: #f0f0f0;
+  color: #333 !important;
+  background: #f7f7f7;
+}
+#focus-reading-pad ::selection {
+  color: #fff;
+  background: #666;
 }
 #focus-reading-pad-content {
   margin: 50px auto;
-  width: 500px;
+  width: 600px;
 }
 #focus-reading-pad-content .focus-reading-article-title {
   font-size: 24px;
-  line-height: 2;
   font-weight: normal;
   text-align: center;
   border-top: 1px dashed #ccc;
   border-bottom: 1px dashed #ccc;
   padding: 1em;
   margin-bottom: 1em;
-  color: #888;
+  color: #666;
 }
 #focus-reading-pad-content p + p {
-  margin-top: 10px;
+  margin-top: 1em;
 }
 #focus-reading-pad-content img {
   margin-top: 10px;

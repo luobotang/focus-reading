@@ -1,3 +1,20 @@
+@scrollbar-width: 12px;
+
+html.focus-reading,
+body.focus-reading {
+	overflow: hidden;
+
+	::-webkit-scrollbar {
+		width: @scrollbar-width;
+	}
+	::-webkit-scrollbar-track {
+		border-left: 1px solid #e5e5e5; 
+	}
+	::-webkit-scrollbar-thumb {
+		background: #ccc;
+	}
+}
+
 #focus-reading-pad {
 	position: fixed;
 	top: 0;
@@ -8,20 +25,21 @@
 
 	/* reset */
 	overflow: auto;
-	font: 14px/2 arial, "Microsoft Yahei", sans-seirf;
+	font: 16px/1.7 arial, "Microsoft Yahei", sans-seirf;
 	color: #333;
 	background: #fff;
 	text-align: left;
 
-	/* for dajia.qq.com: overflow <p> style */
+	/* overflow page style */
 	p {
-		font: 14px/2 arial, "Microsoft Yahei", sans-seirf;
+		margin: 0;
+		font: 16px/1.7 arial, "Microsoft Yahei", sans-seirf;
 	}
 
 	.button-close {
 		position: fixed;
 		top: 0;
-		right: 17px;
+		right: @scrollbar-width;
 		line-height: 30px;
 		font-size: 24px;
 		width: 30px;
@@ -29,34 +47,38 @@
 		cursor: pointer;
 		text-decoration: none;
 		color: #ccc;
-		background: #fff;
+		background: rgba(255,255,255,0.5);
 
 		&:hover,
 		&:active {
-			color: #666 !important;
-			background: #f0f0f0;
+			color: #333 !important;
+			background: #f7f7f7;
 		}
+	}
+
+	::selection {
+		color: #fff;
+		background: #666;
 	}
 }
 
 #focus-reading-pad-content {
 	margin: 50px auto;
-	width: 500px;
+	width: 600px;
 
 	.focus-reading-article-title {
 		font-size: 24px;
-		line-height: 2;
 		font-weight: normal;
 		text-align: center;
 		border-top: 1px dashed #ccc;
 		border-bottom: 1px dashed #ccc;
 		padding: 1em;
 		margin-bottom: 1em;
-		color: #888;
+		color: #666;
 	}
 
 	p + p {
-		margin-top: 10px;
+		margin-top: 1em;
 	}
 
 	img {
