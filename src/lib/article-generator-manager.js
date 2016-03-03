@@ -10,35 +10,59 @@ var ArticleGeneratorManager = {}
 /**
  * 1. generator object
  * @param {Object} generator
- *   - name {sring}
+ *   - [match] {string|RegExp}
+ *   - [name] {sring}
  *   - title {string|function}
  *   - content {string|function}
  *
  * 2. generator params
+ * @param {string|RegExp} - [match]
  * @param {string} - name
  * @param {string|function} - title selector | generator
  * @param {string|function} - content selector | generator
  */
 ArticleGeneratorManager.add = function (generator) {
 	if (typeof generator === 'object') {
+		if (generator.match) {
+			// ok, has match
+		} else {
+			generator.match = generator.name
+		}
 		this.generators.push(generator)
-	} else if (arguments.length === 3) {
-		this.generators.push({
-			name: arguments[0],
-			title: arguments[1],
-			content: arguments[2]
-		})
+	} else {
+		if (arguments.length === 3) {
+			this.generators.push({
+				match: arguments[0], // !!!
+				name: arguments[0],
+				title: arguments[1],
+				content: arguments[2]
+			})
+		} else if (arguments.length === 4) {
+			this.generators.push({
+				match: arguments[0],
+				name: arguments[1],
+				title: arguments[2],
+				content: arguments[3]
+			})
+		}
 	}
 	return this
 }
 
 ArticleGeneratorManager.generatArticle = function () {
 	var generator
-	var hostname = location.hostname
+	var url = location.href
+	var articleClass
 	var i = 0
 	while ((generator = this.generators[i++])) {
-		if (hostname.indexOf(generator.name) > -1) {
-			var articleClass = 'focus-reading-article-' + generator.name.replace(/\./g, '-')
+		var pattern = matchUrlPattern()
+		if (matchUrlPattern(url, generator.match)) {
+			if (generator.name) {
+				articleClass = 'focus-reading-article-' + generator.name.replace(/\./g, '-')
+			} else {
+				articleClass = 'focus-reading-article-any'
+			}
+
 			var title = this.getText(generator.title)
 			var content = this.getHtml(generator.content)
 			if (title && content) {
@@ -79,11 +103,48 @@ ArticleGeneratorManager.getHtml = function (s) {
 
 ArticleGeneratorManager.tryRemoveStyleInfo = function (html) {
 	var reStyleAttr = /(<[^>]+)(style="[^"]+"|style='[^']+')([^>]*>)/g
+	var reFontElement = /<font[^>]*>/g
 	return (
 		html
 		.replace(reStyleAttr, function (m, prev, styleAttr, after) {
 			return prev + after
 		})
+		.replace(reFontElement, function (m) {
+			return '<font>'
+		})
+	)
+}
+
+/*
+ * 判断 url 与指定的 pattern 是否匹配
+ *
+ * @param {string} url
+ * @param {string|RegExp} pattern
+ * @return {boolean}
+ */
+function matchUrlPattern(url, pattern) {
+	if (pattern) {
+		if (typeof pattern === 'string') {
+			pattern = makePatternRegExp(pattern)
+		}
+		return pattern.test(url)
+	} else {
+		return false
+	}
+}
+
+/*
+ * @param {string} pattern
+ * @return {RegExp}
+ *
+ * @example
+ * 'www.example.com' -> new RegExp
+ */
+function makePatternRegExp(pattern) {
+	return new RegExp(
+		pattern
+		.replace(/\./, '\\.')
+		.replace(/\*/, '\\w*')
 	)
 }
 

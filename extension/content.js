@@ -9902,7 +9902,7 @@ function focusRead() {
 		alert('Focus Reading: Can not find anything to read.')
 	}
 }
-},{"./lib/article-generator-manager":3,"./lib/article-generators/":9,"./lib/focus-reading-link-tip":12,"./lib/focus-reading-pad":13,"jquery":1}],3:[function(require,module,exports){
+},{"./lib/article-generator-manager":3,"./lib/article-generators/":8,"./lib/focus-reading-link-tip":11,"./lib/focus-reading-pad":12,"jquery":1}],3:[function(require,module,exports){
 /*
  * ArticleGeneratorManager
  * 管理网页“内容提供器”
@@ -9915,35 +9915,59 @@ var ArticleGeneratorManager = {}
 /**
  * 1. generator object
  * @param {Object} generator
- *   - name {sring}
+ *   - [match] {string|RegExp}
+ *   - [name] {sring}
  *   - title {string|function}
  *   - content {string|function}
  *
  * 2. generator params
+ * @param {string|RegExp} - [match]
  * @param {string} - name
  * @param {string|function} - title selector | generator
  * @param {string|function} - content selector | generator
  */
 ArticleGeneratorManager.add = function (generator) {
 	if (typeof generator === 'object') {
+		if (generator.match) {
+			// ok, has match
+		} else {
+			generator.match = generator.name
+		}
 		this.generators.push(generator)
-	} else if (arguments.length === 3) {
-		this.generators.push({
-			name: arguments[0],
-			title: arguments[1],
-			content: arguments[2]
-		})
+	} else {
+		if (arguments.length === 3) {
+			this.generators.push({
+				match: arguments[0], // !!!
+				name: arguments[0],
+				title: arguments[1],
+				content: arguments[2]
+			})
+		} else if (arguments.length === 4) {
+			this.generators.push({
+				match: arguments[0],
+				name: arguments[1],
+				title: arguments[2],
+				content: arguments[3]
+			})
+		}
 	}
 	return this
 }
 
 ArticleGeneratorManager.generatArticle = function () {
 	var generator
-	var hostname = location.hostname
+	var url = location.href
+	var articleClass
 	var i = 0
 	while ((generator = this.generators[i++])) {
-		if (hostname.indexOf(generator.name) > -1) {
-			var articleClass = 'focus-reading-article-' + generator.name.replace(/\./g, '-')
+		var pattern = matchUrlPattern()
+		if (matchUrlPattern(url, generator.match)) {
+			if (generator.name) {
+				articleClass = 'focus-reading-article-' + generator.name.replace(/\./g, '-')
+			} else {
+				articleClass = 'focus-reading-article-any'
+			}
+
 			var title = this.getText(generator.title)
 			var content = this.getHtml(generator.content)
 			if (title && content) {
@@ -9984,11 +10008,48 @@ ArticleGeneratorManager.getHtml = function (s) {
 
 ArticleGeneratorManager.tryRemoveStyleInfo = function (html) {
 	var reStyleAttr = /(<[^>]+)(style="[^"]+"|style='[^']+')([^>]*>)/g
+	var reFontElement = /<font[^>]*>/g
 	return (
 		html
 		.replace(reStyleAttr, function (m, prev, styleAttr, after) {
 			return prev + after
 		})
+		.replace(reFontElement, function (m) {
+			return '<font>'
+		})
+	)
+}
+
+/*
+ * 判断 url 与指定的 pattern 是否匹配
+ *
+ * @param {string} url
+ * @param {string|RegExp} pattern
+ * @return {boolean}
+ */
+function matchUrlPattern(url, pattern) {
+	if (pattern) {
+		if (typeof pattern === 'string') {
+			pattern = makePatternRegExp(pattern)
+		}
+		return pattern.test(url)
+	} else {
+		return false
+	}
+}
+
+/*
+ * @param {string} pattern
+ * @return {RegExp}
+ *
+ * @example
+ * 'www.example.com' -> new RegExp
+ */
+function makePatternRegExp(pattern) {
+	return new RegExp(
+		pattern
+		.replace(/\./, '\\.')
+		.replace(/\*/, '\\w*')
 	)
 }
 
@@ -10047,15 +10108,68 @@ module.exports = {
 	content: '.article-contents'
 }
 },{}],6:[function(require,module,exports){
+/*
+ * 尝试从一个任意页面解析出文章内容
+ */
+
 var $ = require('jquery')
 
-exports.name = 'ent.qq.com'
+var commonTitleSelectorList = [
+	'h1.title',
+	'h1',
+	'#h1title',
+	'#title',
+	'.ArticleTitle',
+	'.title',
+	'h2'
+]
+var commonContentSelectorList = [
+	'#articleContent',
+	'#article_content',
+	'#contentText',
+	'#content',
+	'#abody',
+	'#endText',
+	'.articalContent',
+	'.main-content',
+	'.article_body',
+	'.article-contents',
+	'.ArticleContent',
+	'.article',
+	'.show-content'
+]
+
+exports.match = '*' // 匹配任意页面
 
 exports.title = function () {
-	return $('#articleContent').find('.tuzhu').eq(0).html()
+	var $title = tryGetSingleMatchFromSelectorList(commonTitleSelectorList)
+	if ($title) {
+		return $title.text()
+	} else {
+		return document.title
+	}
 }
 
-exports.content = '#articleContent'
+exports.content = function () {
+	var $content = tryGetSingleMatchFromSelectorList(commonContentSelectorList)
+	if ($content) {
+		return $content.html()
+	} else {
+		return null
+	}
+}
+
+function tryGetSingleMatchFromSelectorList(list) {
+	var i = 0
+	var $match
+	while (($match = $(list[i++]))) {
+		if ($match.length === 1) {
+			console.debug('match selector: ' + list[i - 1])
+			return $match
+		}
+	}
+	return null
+}
 },{"jquery":1}],7:[function(require,module,exports){
 var $ = require('jquery')
 
@@ -10076,12 +10190,6 @@ exports.content = function () {
 },{"jquery":1}],8:[function(require,module,exports){
 var $ = require('jquery')
 
-exports.name = 'www.huxiu.com'
-exports.title = 'h1'
-exports.content = function () {
-	return $('.article-img-box').html() + $('#article_content').html()
-}
-},{"jquery":1}],9:[function(require,module,exports){
 /*
  * @param {ArticleGeneratorManager} articleGeneratorManager
  */
@@ -10089,36 +10197,27 @@ exports.registerAllTo = function (articleGeneratorManager) {
 	articleGeneratorManager
 		.add('gamersky.com', 'h1', '.Mid2L_con')
 		.add('movie.douban', 'h1', '#link-report')
-		.add('baike.baidu', 'h1', '.main-content')
-		.add('jianshu.com', 'h1.title', '.show-content')
 		.add('guancha.cn', '.content-title1', '.all-txt')
-		.add('tuicool.com', 'h1', '.article_body')
 		.add('chinanews.com', 'h1', '.left_zw')
-		.add('xinhuanet.com', '#title', '.article')
 		.add('21ccom.net', 'h4', '#contents')
-		.add('chinavalue.net', '.ArticleTitle', '.ArticleContent')
-		.add('dajia.qq.com', 'h1', '#content, #articleContent')
-		.add('news.163.com', '#h1title', '#endText')
-		.add('tech.163.com', 'h1', '#endText')
 		.add('udpwork.com', '#rss_item h2:first', '#rss_item .content')
-		.add('36kr.com', 'h1', '.article')
 		.add('blog.163.com', 'h3.title', '.nbw-blog')
+		.add('www.cnblogs.com', '.postTitle', '#cnblogs_post_body')
+		.add('news.ifeng.com', 'h1', '.AtxtType01')
+		.add('huxiu.com', 'h1', function () {
+			return $('.article-img-box').html() + $('#article_content').html()
+		})
+
 		.add(require('./baidu-tieba.js'))
 		.add(require('./zhihu.js'))
 		.add(require('./bitauto'))
 		.add(require('./haodf'))
-		.add('news.ifeng.com', 'h1', '.AtxtType01')
-		.add(require('./ent-qq'))
-		.add(require('./huxiu'))
-		.add('cri.cn', 'h1', '#abody')
 		.add(require('./tianya'))
-		.add('finance.qq.com', 'h1', '#articleContent')
-		.add('blog.csdn.net', 'h1', '#article_content')
-		.add('www.cnblogs.com', '.postTitle', '#cnblogs_post_body')
-		.add('blog.sina.com.cn', 'h2', '.articalContent')
-		.add('sports.sohu.com', 'h1', '#contentText')
+
+		/* ��Ϊͨ�õĻ�ȡģʽ���� common */
+		.add(require('./common'))
 }
-},{"./baidu-tieba.js":4,"./bitauto":5,"./ent-qq":6,"./haodf":7,"./huxiu":8,"./tianya":10,"./zhihu.js":11}],10:[function(require,module,exports){
+},{"./baidu-tieba.js":4,"./bitauto":5,"./common":6,"./haodf":7,"./tianya":9,"./zhihu.js":10,"jquery":1}],9:[function(require,module,exports){
 var $ = require('jquery')
 
 exports.name = 'bbs.tianya.cn'
@@ -10150,7 +10249,7 @@ function replaceImgSrcWithOriginal($el) {
 	})
 	return $clone
 }
-},{"jquery":1}],11:[function(require,module,exports){
+},{"jquery":1}],10:[function(require,module,exports){
 /*
  * ZhihuArticleGenerator
  * 用于知乎网站的内容生成器
@@ -10264,7 +10363,7 @@ ZhihuArticleGenerator.isElementInReading = function (el) {
 }
 
 module.exports = ZhihuArticleGenerator
-},{"jquery":1}],12:[function(require,module,exports){
+},{"jquery":1}],11:[function(require,module,exports){
 /*
  * FocusReadingLinkTip
  * 跟踪鼠标在页面有效链接上的停留，显示“专注阅读”，以便在打开的页面中直接启用阅读模式
@@ -10404,7 +10503,7 @@ function parseUrl(url) {
 }
 
 module.exports = FocusReadingLinkTip
-},{"jquery":1}],13:[function(require,module,exports){
+},{"jquery":1}],12:[function(require,module,exports){
 /*
  * FocusReadingPad
  * 文章阅读面板
