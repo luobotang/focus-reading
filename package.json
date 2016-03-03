@@ -1,6 +1,6 @@
 {
   "name": "focus-reading",
-  "version": "0.3.0",
+  "version": "0.3.3",
   "description": "Focus on Reading chrome extension",
   "main": "src/content.js",
   "repository": {
