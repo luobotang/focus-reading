@@ -3,16 +3,6 @@
 html.focus-reading,
 body.focus-reading {
 	overflow: hidden;
-
-	::-webkit-scrollbar {
-		width: @scrollbar-width;
-	}
-	::-webkit-scrollbar-track {
-		border-left: 1px solid #e5e5e5; 
-	}
-	::-webkit-scrollbar-thumb {
-		background: #ccc;
-	}
 }
 
 #focus-reading-pad {
@@ -53,6 +43,20 @@ body.focus-reading {
 		&:active {
 			color: #333 !important;
 			background: #f7f7f7;
+		}
+	}
+
+	&::-webkit-scrollbar {
+		width: @scrollbar-width;
+	}
+	&::-webkit-scrollbar-track {
+		//border-left: 1px solid #e5e5e5; 
+	}
+	&::-webkit-scrollbar-thumb {
+		background: #e5e5e5;
+
+		&:active {
+			background: #ccc;
 		}
 	}
 

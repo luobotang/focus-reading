@@ -2,18 +2,6 @@ html.focus-reading,
 body.focus-reading {
   overflow: hidden;
 }
-html.focus-reading ::-webkit-scrollbar,
-body.focus-reading ::-webkit-scrollbar {
-  width: 12px;
-}
-html.focus-reading ::-webkit-scrollbar-track,
-body.focus-reading ::-webkit-scrollbar-track {
-  border-left: 1px solid #e5e5e5;
-}
-html.focus-reading ::-webkit-scrollbar-thumb,
-body.focus-reading ::-webkit-scrollbar-thumb {
-  background: #ccc;
-}
 #focus-reading-pad {
   position: fixed;
   top: 0;
@@ -50,6 +38,15 @@ body.focus-reading ::-webkit-scrollbar-thumb {
 #focus-reading-pad .button-close:active {
   color: #333 !important;
   background: #f7f7f7;
+}
+#focus-reading-pad::-webkit-scrollbar {
+  width: 12px;
+}
+#focus-reading-pad::-webkit-scrollbar-thumb {
+  background: #e5e5e5;
+}
+#focus-reading-pad::-webkit-scrollbar-thumb:active {
+  background: #ccc;
 }
 #focus-reading-pad ::selection {
   color: #fff;
