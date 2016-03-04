@@ -12,13 +12,13 @@ body.focus-reading {
   /* reset */
   overflow: auto;
   font: 16px/1.7 arial, "Microsoft Yahei", sans-seirf;
-  color: #333;
-  background: #fff;
+  color: #666;
+  background: #fafaf0;
   text-align: left;
   /* overflow page style */
 }
 #focus-reading-pad p {
-  margin: 0;
+  margin: 0 0 1em;
   font: 16px/1.7 arial, "Microsoft Yahei", sans-seirf;
 }
 #focus-reading-pad .button-close {
@@ -32,12 +32,10 @@ body.focus-reading {
   cursor: pointer;
   text-decoration: none;
   color: #ccc;
-  background: rgba(255, 255, 255, 0.5);
 }
 #focus-reading-pad .button-close:hover,
 #focus-reading-pad .button-close:active {
   color: #333 !important;
-  background: #f7f7f7;
 }
 #focus-reading-pad::-webkit-scrollbar {
   width: 12px;
@@ -54,7 +52,17 @@ body.focus-reading {
 }
 #focus-reading-pad-content {
   margin: 50px auto;
-  width: 600px;
+  width: 550px;
+  text-align: justify;
+}
+#focus-reading-pad-content h1,
+#focus-reading-pad-content h2,
+#focus-reading-pad-content h3,
+#focus-reading-pad-content h4,
+#focus-reading-pad-content h5,
+#focus-reading-pad-content h6 {
+  margin-bottom: 1em;
+  font: bold 16px/2 arial, "Microsoft Yahei", sans-seirf;
 }
 #focus-reading-pad-content .focus-reading-article-title {
   font-size: 24px;
@@ -65,9 +73,6 @@ body.focus-reading {
   padding: 1em;
   margin-bottom: 1em;
   color: #666;
-}
-#focus-reading-pad-content p + p {
-  margin-top: 1em;
 }
 #focus-reading-pad-content img {
   margin-top: 10px;
