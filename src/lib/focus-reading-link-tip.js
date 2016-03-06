@@ -40,9 +40,9 @@ FocusReadingLinkTip.init = function () {
 	}).on('click', '.focus-reading-tip-for-link', function (e) {
 		var url = $(e.currentTarget).attr('data-url')
 		if (url) {
+			e.preventDefault()
 			window.open(url, 'focus-reading-window')
 		}
-		e.preventDefault()
 	})
 
 	/*

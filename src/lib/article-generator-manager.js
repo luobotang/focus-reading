@@ -104,7 +104,7 @@ ArticleGeneratorManager.getHtml = function (s) {
 ArticleGeneratorManager.tryRemoveStyleInfo = function (html) {
 	var reStyleAttr = /(<[^>]+)(style="[^"]+"|style='[^']+')([^>]*>)/g
 	var reFontElement = /<font[^>]*>/g
-	return (
+	return typeof html === 'string' ? (
 		html
 		.replace(reStyleAttr, function (m, prev, styleAttr, after) {
 			return prev + after
@@ -112,7 +112,7 @@ ArticleGeneratorManager.tryRemoveStyleInfo = function (html) {
 		.replace(reFontElement, function (m) {
 			return '<font>'
 		})
-	)
+	) : null
 }
 
 /*
