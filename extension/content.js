@@ -10380,9 +10380,7 @@ FocusReadingLinkTip.init = function () {
 	$(document).on('mouseenter mouseleave', 'a', function (e) {
 		if (FocusReadingLinkTip._enabled) {
 			if (e.type === 'mouseleave' || lazyTimer) {
-				clearTimeout(lazyTimer)
-				lazyTimer = null
-				$link = null
+				stopMakeReadingLinkTip()
 			} else {
 				$link = $(e.currentTarget)
 				var url = $link.attr('href')
@@ -10399,15 +10397,16 @@ FocusReadingLinkTip.init = function () {
 				}
 			}
 		} else {
-			clearTimeout(lazyTimer)
-			lazyTimer = null
-			$link = null
+			stopMakeReadingLinkTip()
 		}
 	}).on('click', '.focus-reading-tip-for-link', function (e) {
 		var url = $(e.currentTarget).attr('data-url')
 		if (url) {
 			e.preventDefault()
-			window.open(url, 'focus-reading-window')
+			stopMakeReadingLinkTip()
+			setTimeout(function () {
+				window.open(url, 'focus-reading-window')
+			}, 100)
 		}
 	})
 
@@ -10449,6 +10448,12 @@ FocusReadingLinkTip.init = function () {
 				})
 			}
 		})
+	}
+
+	function stopMakeReadingLinkTip() {
+		clearTimeout(lazyTimer)
+		lazyTimer = null
+		$link = null
 	}
 }
 
