@@ -41,6 +41,9 @@ FocusReadingLinkTip.init = function () {
 			setTimeout(function () {
 				window.open(url, 'focus-reading-window')
 			}, 100)
+
+			// TODO 由 background 脚本打开新页面
+			// chrome.extension.sendRequest()
 		}
 	})
 

@@ -10,4 +10,9 @@ chrome.pageAction.onClicked.addListener(function (tab) {
 		// 注意：第二个参数需要保留（即便为空对象），使用 null 时无法触发请求
 	})
 })
+
+// TODO 打开 link-tip 请求的新页面
+//chrome.extension.onRequest(function () {
+//	TODO chrome.windows.create
+//})
 },{}]},{},[1]);
