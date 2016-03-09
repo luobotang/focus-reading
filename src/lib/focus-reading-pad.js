@@ -11,9 +11,12 @@ var EVENT_HIDE = 'hide'
 var FocusReadingPad = {}
 
 FocusReadingPad.init = function () {
+	this._event = $({})
+}
+
+FocusReadingPad.initializePad = function () {
 	this.$readingPad = $(this.TEMPLATE_PAD).hide().appendTo('body')
 	this.$readingPad.on('click', '.button-close', this.hide.bind(this))
-	this._event = $({})
 }
 
 FocusReadingPad.TEMPLATE_PAD = (
@@ -25,6 +28,11 @@ FocusReadingPad.TEMPLATE_PAD = (
 FocusReadingPad.CLASS_READING_PAD_SHOWING = 'focus-reading'
 
 FocusReadingPad.show = function (title, content, articleClass) {
+
+	if (!this.$readingPad) {
+		this.initializePad()
+	}
+
 	this.$readingPad.find('#focus-reading-pad-content').html(
 		'<div class="focus-reading-article-title">' + title + '</div>' +
 		'<div class="focus-reading-article-content">' + content + '</div>'
